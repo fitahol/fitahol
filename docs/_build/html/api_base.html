@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>接口协定 &mdash; fitahol 1.0.0 文档</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="fitahol 1.0.0 文档" href="index.html" />
+    <link rel="next" title="固件接口" href="firmware.html" />
+    <link rel="prev" title="基础协定" href="restful.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>接口协定<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>接口地址<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li>服务器地址： <a class="reference external" href="http://api.fitahol.com">http://api.fitahol.com</a></li>
+</ul>
+</div>
+<div class="section" id="http-status">
+<h2>HTTP STATUS协议<a class="headerlink" href="#http-status" title="永久链接至标题">¶</a></h2>
+<p>所有接口均按restful协议：</p>
+<ol class="arabic simple">
+<li>请求成功 Successful - 2xx</li>
+</ol>
+<p>最常用的三个：</p>
+<blockquote>
+<div><ul class="simple">
+<li>HTTP_200_OK  get和put/patch请求成功</li>
+<li>HTTP_201_CREATED  post 创建成功</li>
+<li>HTTP_202_ACCEPTED delete 删除接受</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>客户端请求有误 Client Error - 4xx</li>
+</ol>
+<p>最常遇到的：</p>
+<blockquote>
+<div><ul class="simple">
+<li>HTTP_400_BAD_REQUEST 前端参数格式或类型有误</li>
+<li>HTTP_401_UNAUTHORIZED 用户未登录，需要先登录</li>
+<li>HTTP_403_FORBIDDEN  用户身份权限不足</li>
+<li>HTTP_404_NOT_FOUND  请求或访问的数据不存在</li>
+<li>HTTP_405_METHOD_NOT_ALLOWED  http请求方法不被允许</li>
+<li>HTTP_406_NOT_ACCEPTABLE  数据内容有问题，不接受处理</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>服务器异常 Server Error - 5xx</li>
+</ol>
+<p>常见的包括：</p>
+<blockquote>
+<div><ul class="simple">
+<li>HTTP_500_INTERNAL_SERVER_ERROR 服务器代码程序有bug，崩溃</li>
+<li>HTTP_502_BAD_GATEWAY  nginx网关出错误</li>
+<li>HTTP_503_SERVICE_UNAVAILABLE  nginx网关连接不到应用服务器</li>
+<li>HTTP_504_GATEWAY_TIMEOUT  达到nginx设置的超时限制</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li>特殊处理：</li>
+</ol>
+<p>需要特殊处理的状态包括:</p>
+<blockquote>
+<div><ul class="simple">
+<li>200-300 正常加载数据，</li>
+<li>400 客户端参数错误，</li>
+<li>401 用户未登陆跳转登录，</li>
+<li>403 用户权限不足或被禁用，</li>
+<li>410 资源丢失&gt;&gt;刷新处理 ，</li>
+<li>404 访问资源被删除或不存在，报错弹窗msg</li>
+<li>500 服务端异常</li>
+<li>其他的全部都直接 {&#8220;detail&#8221;: &#8220;弹窗内容&#8221;, &#8220;opcode:&#8221;: 245}</li>
+<li>避免出现 opcode 操作码。</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h2>返回数据格式说明<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id4">
+<h3>详情数据<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>json 数据项：</p>
+<div class="code json highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;total&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s">&quot;balance&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s">&quot;ad_count&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s">&quot;ad_money&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s">&quot;invite_money&quot;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>哈希对象包括了相关的属性值。</p>
+</div>
+<div class="section" id="id5">
+<h3>列表数据<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>默认服务端都会 <strong>分页</strong> ，如果不需要分页会在接口中特别说明！</p>
+<p>默认每页数据10项，数据格式如下所示：</p>
+<div class="code json highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">&quot;next&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s">&quot;previous&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s">&quot;results&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s">&quot;withdraw_good&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s">&quot;pay&quot;</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span>
+            <span class="s">&quot;pay_status&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s">&quot;ptype&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s">&quot;remark&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>next和previous值如:</p>
+<p>&gt; <a class="reference external" href="http://api.example.org/accounts/?page=5">http://api.example.org/accounts/?page=5</a></p>
+<p>服务端支持客户端指定 每页数据大小，参数值为 page_size，上限为100。（超过100，全部按上限处理）</p>
+<p>说明：如果接口未分页，返回数据为列表数据</p>
+<div class="code json highlight-python"><div class="highlight"><pre><span class="p">[</span>
+    <span class="p">{</span><span class="s">&quot;key&quot;</span><span class="p">:</span> <span class="s">&quot;value&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;key&quot;</span><span class="p">:</span> <span class="s">&quot;value&quot;</span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>返回所有数据列表。</p>
+<ol class="arabic simple" start="5">
+<li>user-agent定制</li>
+</ol>
+<p>User Agent定制, 格式为 app_version=1.0.0&amp;device_id=53244890</p>
+<p>具体参数如下, 请按下面的参数顺序排序</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;device_id&#8221;: &#8220;863151020303571&#8221;,</li>
+<li>&#8220;user&#8221;:&#8221;3456345&#8221;</li>
+<li>&#8220;os_type&#8221;: &#8220;android&#8221;,</li>
+<li>&#8220;os_version&#8221;: &#8220;4.2.1&#8221;,</li>
+<li>&#8220;package_name&#8221;: &#8220;com.happy.lock.wifi&#8221;,</li>
+<li>&#8220;app_version&#8221;: &#8220;1.0.0&#8221;,</li>
+<li>&#8220;imsi&#8221;: &#8220;460025012436898&#8221;,</li>
+<li>&#8220;channel&#8221;: &#8220;wall&#8221;,</li>
+<li>&#8220;device_name&#8221;: &#8220;M355&#8221;,</li>
+<li>&#8220;net&#8221;: &#8220;WIFI&#8221;,</li>
+<li>&#8220;language&#8221;: &#8220;zh&#8221;</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">接口协定</a><ul>
+<li><a class="reference internal" href="#id2">接口地址</a></li>
+<li><a class="reference internal" href="#http-status">HTTP STATUS协议</a></li>
+<li><a class="reference internal" href="#id3">返回数据格式说明</a><ul>
+<li><a class="reference internal" href="#id4">详情数据</a></li>
+<li><a class="reference internal" href="#id5">列表数据</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="restful.html" title="上一章">基础协定</a></li>
+      <li>Next: <a href="firmware.html" title="下一章">固件接口</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_base.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Devin Mah.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/api_base.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

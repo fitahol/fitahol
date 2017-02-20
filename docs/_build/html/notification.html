@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>消息通知 &mdash; fitahol 1.0.0 文档</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="fitahol 1.0.0 文档" href="index.html" />
+    <link rel="prev" title="健身接口" href="fitness.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>消息通知<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>获取所有通知<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--notification-">
+<code class="descname">GET </code><code class="descname">/notification/</code><a class="headerlink" href="#get--notification-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取用户所有通知, 默认分页</p>
+<p><strong>请求参数</strong>:</p>
+<p>无, 需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/notification/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre>{
+&quot;count&quot;: 2,
+&quot;next&quot;: null,
+&quot;previous&quot;: null,
+&quot;results&quot;:[
+    {
+    &quot;id&quot;: 2,
+    &quot;description&quot;: &quot;绑定[用户8 &amp; 用户3]关系确认 ~ 7 分钟 之前&quot;,
+    &quot;show_time&quot;: &quot;2016-06-16 19:13:23&quot;,
+    &quot;unread&quot;: true,
+    &quot;target&quot;: &quot;&quot;,
+    &quot;action_type&quot;: &quot;userrelationconfirm&quot;,
+    &quot;action_object_id&quot;: &quot;7&quot;,
+    &quot;extra&quot;:{}
+    },
+    {
+    &quot;id&quot;: 3,
+    &quot;description&quot;: &quot;绑定[用户8 &amp; 用户3]关系确认 ~ 7 分钟 之前&quot;,
+    &quot;show_time&quot;: &quot;2016-06-16 19:13:23&quot;,
+    &quot;unread&quot;: true,
+    &quot;target&quot;: &quot;&quot;,
+    &quot;action_type&quot;: &quot;userrelationconfirm&quot;,
+    &quot;action_object_id&quot;: &quot;7&quot;,
+    &quot;extra&quot;:{}
+    }
+    ]
+}
+</pre></div>
+</div>
+<p><strong>返回参数说明</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>int</em>) &#8211; 通知id</li>
+<li><strong>level</strong> (<em>string</em>) &#8211; 通知类型: (0, &#8216;通知&#8217;)(1, &#8216;私信&#8217;), (2, &#8216;评论&#8217;), (3, &#8216;&#64;我&#8217;); 1.0版暂时只有level=0</li>
+<li><strong>description</strong> (<em>string</em>) &#8211; 通知内容描述</li>
+<li><strong>unread</strong> (<em>bool</em>) &#8211; 是否已读</li>
+<li><strong>target</strong> (<em>string</em>) &#8211; 跳转类型: 空为不跳转, <a class="reference external" href="http://">http://</a> 开头为跳转网页, app:// 开头为跳转界面</li>
+<li><strong>action_type</strong> (<em>string</em>) &#8211; 事件类型协定; 如userrelationconfirm指绑定关系确认</li>
+<li><strong>action_object_id</strong> (<em>int</em>) &#8211; 事件类型对应ID, 无值则跳列表</li>
+<li><strong>extra</strong> (<em>json</em>) &#8211; 附加参数</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id3">
+<h2>获取未读通知<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--notification-unread-">
+<code class="descname">GET </code><code class="descname">/notification/unread/</code><a class="headerlink" href="#get--notification-unread-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取用户未读通知, 不分页</p>
+<p><strong>请求参数</strong>:</p>
+<p>无, 需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/notification/unread/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[</dt>
+<dd>{
+&#8220;id&#8221;: 2,
+&#8220;description&#8221;: &#8220;绑定[用户8 &amp; 用户3]关系确认 ~ 7 分钟 之前&#8221;,
+&#8220;show_time&#8221;: &#8220;2016-06-16 19:13:23&#8221;,
+&#8220;unread&#8221;: true,
+&#8220;target&#8221;: &#8220;&#8221;,
+&#8220;action_type&#8221;: &#8220;userrelationconfirm&#8221;,
+&#8220;action_object_id&#8221;: &#8220;7&#8221;,
+&#8220;extra&#8221;:{}
+}</dd>
+</dl>
+<p>]</p>
+<p><strong>参数说明同上</strong></p>
+</dd></dl>
+
+</div>
+<div class="section" id="id4">
+<h2>所有未读通知置为已读<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--notification-mark_all_read-">
+<code class="descname">GET </code><code class="descname">/notification/mark_all_read/</code><a class="headerlink" href="#get--notification-mark_all_read-" title="永久链接至目标">¶</a></dt>
+<dd><p>将所有未读的通知,置为已读状态</p>
+<p><strong>请求参数</strong>:</p>
+<p>无, 需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/notification/mark_all_read/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre>{
+    &quot;detail&quot;: &quot;请求成功&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id5">
+<h2>指定通知置为已读<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--notification-mark_read--notification_id--">
+<code class="descname">GET </code><code class="descname">/notification/mark_read/&lt;notification_id&gt;/</code><a class="headerlink" href="#get--notification-mark_read--notification_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>指定通知id,置为已读状态</p>
+<p><strong>请求参数</strong>:</p>
+<p>无, 需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/notification/mark_read/1/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre>{
+    &quot;detail&quot;: &quot;请求成功&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id6">
+<h2>指定通知置为未读<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--notification-mark_unread--notification_id--">
+<code class="descname">GET </code><code class="descname">/notification/mark_unread/&lt;notification_id&gt;/</code><a class="headerlink" href="#get--notification-mark_unread--notification_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>指定通知id,置为已读状态</p>
+<p><strong>请求参数</strong>:</p>
+<p>无, 需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/notification/mark_unread/1/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre>{
+    &quot;detail&quot;: &quot;请求成功&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id7">
+<h2>获取未读通知总数<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--notification-unread_count-">
+<code class="descname">GET </code><code class="descname">/notification/unread_count/</code><a class="headerlink" href="#get--notification-unread_count-" title="永久链接至目标">¶</a></dt>
+<dd><p>指定通知id,置为已读状态</p>
+<p><strong>请求参数</strong>:</p>
+<p>无, 需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/notification/mark-unread/1/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre>{
+    &quot;unread_count&quot;: 8
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id8">
+<h2>删除通知<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<dl class="delete">
+<dt id="delete--notification--notification_id--">
+<code class="descname">DELETE </code><code class="descname">/notification/&lt;notification_id&gt;/</code><a class="headerlink" href="#delete--notification--notification_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>指定通知id, GET请求获取详细, DELETE 请求删除通知</p>
+<p><strong>请求参数</strong>:</p>
+<p>无, 需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">DELETE</span> <span class="nn">/notification/1/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre>{
+    &quot;detail&quot;: &quot;请求删除成功&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">消息通知</a><ul>
+<li><a class="reference internal" href="#id2">获取所有通知</a></li>
+<li><a class="reference internal" href="#id3">获取未读通知</a></li>
+<li><a class="reference internal" href="#id4">所有未读通知置为已读</a></li>
+<li><a class="reference internal" href="#id5">指定通知置为已读</a></li>
+<li><a class="reference internal" href="#id6">指定通知置为未读</a></li>
+<li><a class="reference internal" href="#id7">获取未读通知总数</a></li>
+<li><a class="reference internal" href="#id8">删除通知</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="fitness.html" title="上一章">健身接口</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/notification.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Devin Mah.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/notification.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

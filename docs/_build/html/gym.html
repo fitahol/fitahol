@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>健身房信息 &mdash; fitahol 1.0.0 文档</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="fitahol 1.0.0 文档" href="index.html" />
+    <link rel="next" title="健身接口" href="fitness.html" />
+    <link rel="prev" title="日程&amp;课程" href="schedule.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>健身房信息<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>获取省份<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--central-province-">
+<code class="descname">GET </code><code class="descname">/central/province/</code><a class="headerlink" href="#get--central-province-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取健身房信息</p>
+<p><strong>请求参数</strong>:
+如果已登录需要 添加auth认证, 如果无可以不传</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/central/province/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<p><strong>返回参数</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>code</strong> (<em>int</em>) &#8211; 省代号</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; 名称</li>
+<li><strong>fullname</strong> (<em>string</em>) &#8211; 全称</li>
+<li><strong>suffix</strong> (<em>string</em>) &#8211; 行政单位</li>
+<li><strong>pinyin</strong> (<em>string</em>) &#8211; 名称拼音</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id3">
+<h2>获取城市<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--central-city--province_code--">
+<code class="descname">GET </code><code class="descname">/central/city/&lt;province_code&gt;/</code><a class="headerlink" href="#get--central-city--province_code--" title="永久链接至目标">¶</a></dt>
+<dd><p>获取健身房信息</p>
+<p><strong>请求参数</strong>:
+如果已登录需要 添加auth认证, 如果无可以不传</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/central/city/13/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<p><strong>返回参数</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>code</strong> (<em>int</em>) &#8211; 城市代号</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; 名称</li>
+<li><strong>fullname</strong> (<em>string</em>) &#8211; 全称</li>
+<li><strong>suffix</strong> (<em>string</em>) &#8211; 行政单位</li>
+<li><strong>pinyin</strong> (<em>string</em>) &#8211; 名称拼音</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id4">
+<h2>获取县/区<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--central-district--city_code--">
+<code class="descname">GET </code><code class="descname">/central/district/&lt;city_code&gt;/</code><a class="headerlink" href="#get--central-district--city_code--" title="永久链接至目标">¶</a></dt>
+<dd><p>获取健身房信息</p>
+<p><strong>请求参数</strong>:
+如果已登录需要 添加auth认证, 如果无可以不传</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/central/district/1301/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<p><strong>返回参数</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>code</strong> (<em>int</em>) &#8211; 县/区代号</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; 名称</li>
+<li><strong>fullname</strong> (<em>string</em>) &#8211; 全称</li>
+<li><strong>suffix</strong> (<em>string</em>) &#8211; 行政单位</li>
+<li><strong>pinyin</strong> (<em>string</em>) &#8211; 名称拼音</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id5">
+<h2>获取健身房<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--central-gym-">
+<code class="descname">GET </code><code class="descname">/central/gym/</code><a class="headerlink" href="#get--central-gym-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取健身房信息</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p>以下三个过滤均可，请使用其中之一。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; 健身房名称</li>
+<li><strong>city_code</strong> (<em>string</em>) &#8211; 城市码</li>
+<li><strong>district_code</strong> (<em>string</em>) &#8211; 城区码</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/central/gym/?name=麦加</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;麦加健身美黑工作室&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;青年路国美第一城3号院10号楼3单元&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;telephone&quot;</span><span class="p">:</span> <span class="s2">&quot;010-85583632&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;lat&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;lng&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;city_info&quot;</span><span class="p">:</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;province&quot;</span><span class="p">:{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="s2">&quot;11&quot;</span><span class="p">,</span><span class="nt">&quot;fullname&quot;</span><span class="p">:</span><span class="s2">&quot;北京市&quot;</span><span class="p">},</span>
+            <span class="nt">&quot;city&quot;</span><span class="p">:{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;市辖区&quot;</span><span class="p">,</span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="s2">&quot;1101&quot;</span><span class="p">,</span><span class="nt">&quot;fullname&quot;</span><span class="p">:</span><span class="s2">&quot;市辖区&quot;</span><span class="p">},</span>
+            <span class="nt">&quot;district&quot;</span><span class="p">:{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;朝阳&quot;</span><span class="p">,</span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="s2">&quot;110105&quot;</span><span class="p">,</span><span class="nt">&quot;fullname&quot;</span><span class="p">:</span><span class="s2">&quot;朝阳区&quot;</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id6">
+<h2>添加健身房<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--central-gym-">
+<code class="descname">POST </code><code class="descname">/central/gym/</code><a class="headerlink" href="#post--central-gym-" title="永久链接至目标">¶</a></dt>
+<dd><p>添加健身记录</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; 名称</li>
+<li><strong>address</strong> (<em>string</em>) &#8211; 地址</li>
+<li><strong>telephone</strong> (<em>string</em>) &#8211; 电话，允许写多个以,号间隔</li>
+<li><strong>lat</strong> (<em>float</em>) &#8211; 地理位置,纬度; 可无</li>
+<li><strong>lng</strong> (<em>float</em>) &#8211; 地理位置, 经度; 可无</li>
+<li><strong>district_code</strong> (<em>int</em>) &#8211; 县/区code</li>
+<li><strong>city_code</strong> (<em>int</em>) &#8211; 城市code, 如果县区上传, 城市可不传</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/account/goal_record/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{
+    &quot;name&quot;: &quot;麦加健身&quot;,
+    &quot;address&quot;: &quot;青年路国美第一城3号院10号楼3单元&quot;,
+    &quot;telephone&quot;: &quot;010-85583632&quot;,
+    &quot;lat&quot;: &quot;124.049720&quot;,
+    &quot;lng&quot;: &quot;41.820831&quot;,
+    &quot;city_code&quot;: 1101,
+    &quot;district_code&quot;: 110105
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">健身房信息</a><ul>
+<li><a class="reference internal" href="#id2">获取省份</a></li>
+<li><a class="reference internal" href="#id3">获取城市</a></li>
+<li><a class="reference internal" href="#id4">获取县/区</a></li>
+<li><a class="reference internal" href="#id5">获取健身房</a></li>
+<li><a class="reference internal" href="#id6">添加健身房</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="schedule.html" title="上一章">日程&amp;课程</a></li>
+      <li>Next: <a href="fitness.html" title="下一章">健身接口</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/gym.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Devin Mah.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/gym.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

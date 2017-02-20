@@ -1,0 +1,1697 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>健身接口 &mdash; fitahol 1.0.0 文档</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="fitahol 1.0.0 文档" href="index.html" />
+    <link rel="next" title="消息通知" href="notification.html" />
+    <link rel="prev" title="健身房信息" href="gym.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>健身接口<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>健身动作类别<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-category-">
+<code class="descname">GET </code><code class="descname">/fitness/category/</code><a class="headerlink" href="#get--fitness-category-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取健身房信息</p>
+<p><strong>请求参数</strong>:</p>
+<p>Token 认证通过, 可以获得私有类别</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/category/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>[
+    {
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;肩部&quot;,
+    &quot;en_name&quot;: &quot;Shoulders&quot;,
+    &quot;icon&quot;: &quot;http://0.0.0.0:9999/media/gym/icons/shoulders_iconiphone2x.png&quot;,
+    },
+    {
+    &quot;id&quot;: 2,
+    &quot;name&quot;: &quot;胸部&quot;,
+    &quot;en_name&quot;: &quot;Chest&quot;,
+    &quot;icon&quot;: &quot;http://0.0.0.0:9999/media/gym/icons/chest_iconiphone2x.png&quot;,
+    },
+]
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id3">
+<h2>添加健身动作类别<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--fitness-category-">
+<code class="descname">POST </code><code class="descname">/fitness/category/</code><a class="headerlink" href="#post--fitness-category-" title="永久链接至目标">¶</a></dt>
+<dd><p>添加健身动作类别</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; 名称</li>
+<li><strong>desc</strong> (<em>string</em>) &#8211; 描述</li>
+<li><strong>icon</strong> (<em>file</em>) &#8211; 图标, 文件上传需要 multipart/form-data 请求</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/category/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">multipart/form-data</span>
+
+**因为需要上传文件,所以请求只能是form-data,不能传json**
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;id&quot;: 1,
+&quot;name&quot;: &quot;有氧运动&quot;,
+&quot;en_name&quot;: &quot;cardio&quot;,
+&quot;icon&quot;: &quot;http://0.0.0.0:9999/media/gym/icons/fuhe.png&quot;,
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id4">
+<h2>删除健身动作类别<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<dl class="delete">
+<dt id="delete--fitness-category--category_id--">
+<code class="descname">DELETE </code><code class="descname">/fitness/category/&lt;category_id&gt;/</code><a class="headerlink" href="#delete--fitness-category--category_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>删除健身动作类别, 只能删除自己创建的私有类别</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">DELETE</span> <span class="nn">/fitness/category/1/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:
+:statuscode 204: 删除成功, 无内容</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id5">
+<h2>肌肉群分类<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-muscle-">
+<code class="descname">GET </code><code class="descname">/fitness/muscle/</code><a class="headerlink" href="#get--fitness-muscle-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取健身房信息</p>
+<p><strong>请求参数</strong>:</p>
+<p>Token 认证通过, 可以获得私有类别</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/category/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>[
+    {
+    &quot;name&quot;: &quot;斜方肌&quot;,
+    &quot;en_name&quot;: &quot;Trapezius&quot;,
+    &quot;image&quot;: &quot;http://0.0.0.0:9999/media/gym/muscle/Trapezius_PMiphone.png&quot;,
+    &quot;id&quot;: 1
+    },
+    {
+    &quot;name&quot;: &quot;肱三头肌&quot;,
+    &quot;en_name&quot;: &quot;Triceps Brachii&quot;,
+    &quot;image&quot;: &quot;http://0.0.0.0:9999/media/gym/muscle/Triceps_Brachii_PMiphone.png&quot;,
+    &quot;id&quot;: 2
+    },
+    {
+    &quot;name&quot;: &quot;胸大肌&quot;,
+    &quot;en_name&quot;: &quot;Pectoralis Major&quot;,
+    &quot;image&quot;: &quot;http://0.0.0.0:9999/media/gym/muscle/Pectoralis_Major_PMiphone.png&quot;,
+    &quot;id&quot;: 3
+    },
+
+]
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id6">
+<h2>查看动作列表<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-exercise-">
+<code class="descname">GET </code><code class="descname">/fitness/exercise/</code><a class="headerlink" href="#get--fitness-exercise-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取动作列表, 可以通过参数过滤列表; 如无参数分页返回所有.</p>
+<p><strong>请求参数</strong>:</p>
+<p>Token 认证通过, 可以获得私有动作</p>
+<p>数据分页;
+可以通过两种试过滤健身动作, 之后会添加通过设备过滤;
+不过滤则显示全部.</p>
+<p>category_id 健身类型Id
+muscle_id 肌肉群分类Id</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/exercise/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;count&quot;: 39,
+&quot;next&quot;: &quot;http://0.0.0.0:9999/fitness/exercise/?category_id=6&amp;page=2&quot;,
+&quot;previous&quot;: null,
+&quot;results&quot;:[
+    {
+    &quot;id&quot;: 93,
+    &quot;name&quot;: &quot;引体向上&quot;,
+    &quot;en_name&quot;: &quot;Chin-UpsN&quot;,
+    &quot;icon&quot;: &quot;http://0.0.0.0:9999/media/gym/exercise_icon/Chin-Upsiphone.png&quot;,
+    &quot;is_public&quot;: true
+    },
+]
+}
+</pre></div>
+</div>
+<p><strong>返回参数</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>int</em>) &#8211; 健身动作id</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; 名称</li>
+<li><strong>en_name</strong> (<em>string</em>) &#8211; 英文名</li>
+<li><strong>icon</strong> (<em>string</em>) &#8211; 图标url</li>
+<li><strong>is_public</strong> (<em>bool</em>) &#8211; 是否公开</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id7">
+<h2>查看动作详情<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-exercise--exercise_id--">
+<code class="descname">GET </code><code class="descname">/fitness/exercise/&lt;exercise_id&gt;/</code><a class="headerlink" href="#get--fitness-exercise--exercise_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>获取动作详情</p>
+<p><strong>请求参数</strong>:</p>
+<p>Token 认证通过, 可以获得私有动作</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/exercise/94/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;id&quot;: 94,
+&quot;equipment&quot;:[],
+&quot;pictures&quot;:[
+    {
+    &quot;id&quot;: 183,
+    &quot;picture&quot;: &quot;http://0.0.0.0:9999/media/gym/pictures/Dead-Lifts-1iphone.png&quot;
+    },
+    {
+    &quot;id&quot;: 184,
+    &quot;picture&quot;: &quot;http://0.0.0.0:9999/media/gym/pictures/Dead-Lifts-2iphone.png&quot;
+    }
+],
+&quot;videos&quot;:[],
+&quot;muscles&quot;:[
+    {
+    &quot;name&quot;: &quot;Latissimus Dorsi&quot;,
+    &quot;image&quot;: null,
+    &quot;id&quot;: 16,
+    &quot;level&quot;: &quot;primary&quot;
+    },
+    {
+    &quot;name&quot;: &quot;Biceps Femoris&quot;,
+    &quot;image&quot;: null,
+    &quot;id&quot;: 17,
+    &quot;level&quot;: &quot;secondary&quot;
+    }
+],
+&quot;name&quot;: &quot;哑铃硬拉&quot;,
+&quot;en_name&quot;: &quot;Dead-LiftsN&quot;,
+&quot;desc&quot;: &quot;该动作练习下背部和腿部肌肉。\n\n步骤：双脚分开，与肩同宽。&quot;
+&quot;icon&quot;: &quot;http://0.0.0.0:9999/media/gym/exercise_icon/Dead-Liftsiphone.png&quot;,
+&quot;unit&quot;: &quot;KG&quot;,
+&quot;strength&quot;: &quot;&quot;,
+&quot;is_public&quot;: true
+}
+</pre></div>
+</div>
+<p><strong>返回参数</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<em>int</em>) &#8211; 健身动作id</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; 名称</li>
+<li><strong>en_name</strong> (<em>string</em>) &#8211; 英文名</li>
+<li><strong>icon</strong> (<em>string</em>) &#8211; 图标url</li>
+<li><strong>is_public</strong> (<em>bool</em>) &#8211; 是否公开</li>
+<li><strong>pictures</strong> (<em>list</em>) &#8211; 配图, 核心字段picture: 图片地址</li>
+<li><strong>desc</strong> (<em>string</em>) &#8211; 详细描述</li>
+<li><strong>muscles</strong> (<em>list</em>) &#8211; 肌肉群,包括字段 name, image, level(包括primary和secondary两种肌肉锻炼)</li>
+<li><strong>unit</strong> (<em>string</em>) &#8211; 计量单位</li>
+<li><strong>strength</strong> (<em>string</em>) &#8211; 强度单位, 如分钟或次数</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Params videos:</th><td class="field-body"><p class="first">视频</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Params videos:</th><td class="field-body"><p class="first last">使用到的设备</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id8">
+<h2>创建新动作<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-exercise-">
+<code class="descname">GET </code><code class="descname">/fitness/exercise/</code><a class="headerlink" href="#get--fitness-exercise-" title="永久链接至目标">¶</a></dt>
+<dd><p>本部分待确认!!</p>
+<p><strong>请求参数</strong>:</p>
+<p>Token 认证通过, 可以获得私有动作</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id9">
+<h2>查看健身设备<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-equipment-">
+<code class="descname">GET </code><code class="descname">/fitness/equipment/</code><a class="headerlink" href="#get--fitness-equipment-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取健身房信息</p>
+<p><strong>请求参数</strong>:</p>
+<p>Token 认证通过, 可以获得私有动作</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/equipment/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;count&quot;: 1,
+&quot;next&quot;: null,
+&quot;previous&quot;: null,
+&quot;results&quot;:[
+{
+&quot;id&quot;: 1,
+&quot;pictures&quot;:[
+    {
+    &quot;id&quot;: 1,
+    &quot;picture&quot;: &quot;http://0.0.0.0:9999/media/gym/pictures/ba5e30cbb8ffcf4a61ee9683e36743e0.jpg&quot;
+    }
+],
+&quot;name&quot;: &quot;哑铃&quot;,
+&quot;cover&quot;: &quot;http://.....&quot;,
+&quot;desc&quot;: &quot;哑铃&quot;
+}
+]
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id10">
+<h2>添加健身设备<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--fitness-equipment-">
+<code class="descname">POST </code><code class="descname">/fitness/equipment/</code><a class="headerlink" href="#post--fitness-equipment-" title="永久链接至目标">¶</a></dt>
+<dd><p>添加健身动作类别</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; 名称</li>
+<li><strong>desc</strong> (<em>string</em>) &#8211; 描述</li>
+<li><strong>cover</strong> (<em>file</em>) &#8211; 封面图, 文件上传需要 multipart/form-data 请求</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/equipment/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">multipart/form-data</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;id&quot;: 2,
+&quot;name&quot;: &quot;哑铃&quot;,
+&quot;cover&quot;: &quot;http://.....&quot;,
+&quot;desc&quot;: &quot;哑铃&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id11">
+<h2>获取学员健身目标及7日记录<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-fit_goal-">
+<code class="descname">GET </code><code class="descname">/fitness/fit_goal/</code><a class="headerlink" href="#get--fitness-fit_goal-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取学员选用的健身目标及7日记录
+!!!数据不分页!!!</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/fit_goal/?user_id=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+[
+    {
+        &quot;id&quot;: 19,
+        &quot;name&quot;: &quot;wer&quot;,
+        &quot;measure&quot;: &quot;Kg&quot;,
+        &quot;user_id&quot;: 9,
+        &quot;goal&quot;: 33,
+        &quot;initial&quot;: 50,
+        &quot;schedule&quot;: 30,
+        &quot;is_public&quot;: false,
+        &quot;goal_record&quot;:[{&quot;current&quot;: 30, &quot;cdate&quot;: &quot;2016-07-01&quot;, &quot;id: 1, &quot;figure&quot;: &quot;&quot;}, ]
+    },
+    {
+        &quot;id&quot;: 11,
+        &quot;user_id&quot;: 9,
+        &quot;name&quot;: &quot;手臂增肌&quot;,
+        &quot;measure&quot;: &quot;CM&quot;,
+        &quot;initial&quot;: 50,
+        &quot;schedule&quot;: 30,
+        &quot;goal&quot;: 50,
+        &quot;is_public&quot;: false,
+        &quot;goal_record&quot;:[{&quot;current&quot;: 30, &quot;cdate&quot;: &quot;2016-07-01&quot;, &quot;id: 1, &quot;figure&quot;: &quot;&quot;}, ]
+    }
+]
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; 目标名称</li>
+<li><strong>measure</strong> (<em>string</em>) &#8211; 计量单位</li>
+<li><strong>initial</strong> (<em>int</em>) &#8211; 初始值</li>
+<li><strong>schecule</strong> (<em>int</em>) &#8211; 计划周期，按天数计</li>
+<li><strong>goal</strong> (<em>int</em>) &#8211; 目标值</li>
+<li><strong>is_public</strong> (<em>boolean</em>) &#8211; 是否系统默认, False则为个人私有</li>
+<li><strong>goal_record</strong> (<em>list</em>) &#8211; 目标数据记录，默认最近一周，无则为空列表</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id12">
+<h2>获取学员健身目标最近状态<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-fit_goal-last-">
+<code class="descname">GET </code><code class="descname">/fitness/fit_goal/last/</code><a class="headerlink" href="#get--fitness-fit_goal-last-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取学员最近健身目标变更状态</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/fit_goal/?user_id=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+{
+    &quot;id&quot;: 19,
+    user&quot;:{
+        &quot;nickname&quot;: &quot;马德岭&quot;,
+        &quot;portrait&quot;: &quot;http://www.fitahol.com/media/account/portrait/shiwantuan2.png&quot;,
+        &quot;user_id&quot;: 9
+    },
+    &quot;name&quot;: &quot;身体复健&quot;,
+    &quot;measure&quot;: &quot;Kg&quot;,
+    &quot;goal&quot;: 33,
+    &quot;initial&quot;: 33,
+    &quot;schedule&quot;: 33,
+    &quot;is_public&quot;: false,
+    &quot;goal_record&quot;:{
+        &quot;id&quot;: 11,
+        &quot;current_desc&quot;: &quot;20 Kg&quot;,
+        &quot;current&quot;: 20,
+        &quot;cdate&quot;: &quot;2016-10-18&quot;,
+        &quot;figure&quot;: &quot;晒图地址&quot;,
+        &quot;user&quot;: 9
+    }
+}
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; 目标名称</li>
+<li><strong>measure</strong> (<em>string</em>) &#8211; 计量单位</li>
+<li><strong>initial</strong> (<em>int</em>) &#8211; 初始值</li>
+<li><strong>schecule</strong> (<em>int</em>) &#8211; 计划周期，按天数计</li>
+<li><strong>goal</strong> (<em>int</em>) &#8211; 目标值</li>
+<li><strong>is_public</strong> (<em>boolean</em>) &#8211; 是否系统默认, False则为个人私有</li>
+<li><strong>goal_record</strong> (<em>list</em>) &#8211; 目标数据记录，默认最近一周，无则为空列表</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id13">
+<h2>创建学员健身目标<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--fitness-fit_goal-">
+<code class="descname">POST </code><code class="descname">/fitness/fit_goal/</code><a class="headerlink" href="#post--fitness-fit_goal-" title="永久链接至目标">¶</a></dt>
+<dd><p>创建健身目标, 可选用公用健身目标, 也可以创建新的健身目标;
+1. 选用公用健身目标创建个人目标时,只需要传公用目标id;
+2. 创建新健身目标, 需要传完整的目标数据+用户ID</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+<li><strong>name</strong> (<em>string</em>) &#8211; 目标名称</li>
+<li><strong>measure</strong> (<em>string</em>) &#8211; 计量单位</li>
+<li><strong>inital</strong> &#8211; 初始值</li>
+<li><strong>goal</strong> (<em>int</em>) &#8211; 目标值</li>
+<li><strong>schedule</strong> (<em>int</em>) &#8211; 计划周期，按天数计</li>
+<li><strong>is_public</strong> (<em>boolean</em>) &#8211; 是否作为公开标签</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>POST /fitness/fit_goal/ HTTP/1.1
+Host: api.fitahol.com
+Accept: application/json, application/x-www-form-urlencoded
+1. 选用 公用健身目标
+{&quot;fit_goal&quot;: 123, &quot;user_id&quot;: 6}
+
+2. 创建 新的健身目标
+{&quot;name&quot;:&quot;手臂增肌&quot;, &quot;desc&quot;: &quot;健身增肌肉&quot;, &quot;is_public&quot;: true,
+&quot;measure&quot;: &quot;CM&quot;, &quot;goal&quot;: &quot;50&quot;, &quot;user_id&quot;: 6, &quot;initial&quot;: 80, &quot;schedule&quot;: 30}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">201 Created</a> &#8211; 创建成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;detail&quot;: &quot;创建成功&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id14">
+<h2>删除学员健身目标<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
+<dl class="delete">
+<dt id="delete--fitness-fit_goal--fit_goal_id--">
+<code class="descname">DELETE </code><code class="descname">/fitness/fit_goal/&lt;fit_goal_id&gt;/</code><a class="headerlink" href="#delete--fitness-fit_goal--fit_goal_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>删除健身目标</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">DELETE</span> <span class="nn">/fitness/fit_goal/9/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">204 No Content</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:
+:statuscode 204: 删除成功, 无内容</p>
+<p><strong>请求出错情况</strong>
+:statuscode 400: 没有上传user_id参数
+:statuscode 400: user_id 不是您的学员</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id15">
+<h2>获取学员健身目标变化记录<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-goal_record-">
+<code class="descname">GET </code><code class="descname">/fitness/goal_record/</code><a class="headerlink" href="#get--fitness-goal_record-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取学员选用的健身目标,
+!!!数据不分页!!!</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+<li><strong>fit_goal_id</strong> (<em>int</em>) &#8211; 健身目标id</li>
+<li><strong>interval</strong> (<em>int</em>) &#8211; 间隔时间，如值为7表示最近7天内，30表示最近30天内; 默认7</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/goal_record/?user_id=6&amp;fit_goal_id=11</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;current_desc&quot;</span><span class="p">:</span> <span class="s2">&quot;30 Kg&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;current&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="nt">&quot;cdate&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-07-01&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; 目标名称</li>
+<li><strong>measure</strong> (<em>string</em>) &#8211; 计量单位</li>
+<li><strong>goal</strong> (<em>int</em>) &#8211; 目标值</li>
+<li><strong>is_public</strong> (<em>boolean</em>) &#8211; 是否系统默认, False则为个人私有</li>
+<li><strong>goal_record</strong> (<em>list</em>) &#8211; 目标数据记录，默认最近一周，无则为空列表</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id16">
+<h2>添加学员健身目标变化记录<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--fitness-goal_record-">
+<code class="descname">POST </code><code class="descname">/fitness/goal_record/</code><a class="headerlink" href="#post--fitness-goal_record-" title="永久链接至目标">¶</a></dt>
+<dd><p>添加学员健身目标对应的记录。</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+<li><strong>fit_goal_id</strong> (<em>int</em>) &#8211; 目标ID</li>
+<li><strong>current</strong> (<em>int</em>) &#8211; 当前记录值</li>
+<li><strong>figure</strong> (<em>file</em>) &#8211; 晒图</li>
+<li><strong>cdate</strong> (<em>string</em>) &#8211; 记录日期</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/fitness/goal_record/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{&quot;current&quot;: 30, &quot;cdate&quot;: &quot;2016-07-01&quot;, &quot;id: 1}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">201 Created</a> &#8211; 创建成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;detail&quot;: &quot;创建成功&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id17">
+<h2>删除学员健身目标变化记录<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h2>
+<dl class="delete">
+<dt id="delete--fitness-goal_record--goal_record_id--">
+<code class="descname">DELETE </code><code class="descname">/fitness/goal_record/&lt;goal_record_id&gt;/</code><a class="headerlink" href="#delete--fitness-goal_record--goal_record_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>添加学员健身目标对应的记录。</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">DELETE</span> <span class="nn">/fitness/goal_record/1/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{&quot;user_id&quot;: 3, &quot;fit_goal_id&quot;: 1, &quot;current&quot;: 30, &quot;cdate&quot;: &quot;2016-07-01&quot;}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.3">202 Accepted</a> &#8211; 删除成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;detail&quot;: &quot;删除成功&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id18">
+<h2>课堂训练动作列表<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-exercise_record-">
+<code class="descname">GET </code><code class="descname">/fitness/exercise_record/</code><a class="headerlink" href="#get--fitness-exercise_record-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取用户健身课程对应的健身动作列表
+数据不分页。</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+<li><strong>event_id</strong> (<em>int</em>) &#8211; 课程事件id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/goal_record/?user=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="nt">&quot;exercise&quot;</span><span class="p">:</span>
+        <span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;健身动作名称&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;en_name&quot;</span><span class="p">:</span> <span class="s2">&quot;英文名称&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;图标地址&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;is_public&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;unit&quot;</span><span class="p">:</span> <span class="s2">&quot;计量单位KG&quot;</span>
+        <span class="p">},</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="nt">&quot;number&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>exercise</strong> &#8211; 动作说明</li>
+<li><strong>value</strong> (<em>int</em>) &#8211; 训练体量，如80KG杠铃</li>
+<li><strong>number</strong> (<em>int</em>) &#8211; 训量次数，如举10次</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id19">
+<h2>添加课堂训练动作<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--fitness-exercise_record-">
+<code class="descname">POST </code><code class="descname">/fitness/exercise_record/</code><a class="headerlink" href="#post--fitness-exercise_record-" title="永久链接至目标">¶</a></dt>
+<dd><p>添加健身记录</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+<li><strong>exercise_id</strong> (<em>int</em>) &#8211; 健身动作id</li>
+<li><strong>event_id</strong> (<em>int</em>) &#8211; 课程事件id</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Params value:</th><td class="field-body"><p class="first">训练体量，如80KG杠铃</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Params number:</th><td class="field-body"><p class="first last">训量次数，如举10次</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/fitness/exercise_record/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{
+    &quot;id&quot;: 2,
+    &quot;exercise_id&quot;: 1,
+    &quot;event_id&quot;; 1,
+    &quot;value&quot;: 30,
+    &quot;number&quot;: 12,
+}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">201 Created</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;detail&quot;: &quot;创建成功&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id20">
+<h2>删除课堂训练动作<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h2>
+<dl class="delete">
+<dt id="delete--fitness-exercise_record--exercise_record_id--">
+<code class="descname">DELETE </code><code class="descname">/fitness/exercise_record/&lt;exercise_record_id&gt;/</code><a class="headerlink" href="#delete--fitness-exercise_record--exercise_record_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>创建健身目标</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">DELETE</span> <span class="nn">/fitness/exercise_record/1/?user=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:
+:statuscode 204: 删除成功, 无内容</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id21">
+<h2>公用教练擅长领域<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-expert_tag-public-">
+<code class="descname">GET </code><code class="descname">/fitness/expert_tag/public/</code><a class="headerlink" href="#get--fitness-expert_tag-public-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取教练擅长领域, 公开的标签型 教练擅长领域;
+!!! 数据分页 !!!</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/expert_tag/public/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;减脂&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;减脂圣经&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;is_public&quot;</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; 名称</li>
+<li><strong>desc</strong> (<em>string</em>) &#8211; 描述</li>
+<li><strong>is_public</strong> (<em>boolean</em>) &#8211; 是否系统默认, False则为个人私有</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id22">
+<h2>教练擅长领域<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-expert_tag-">
+<code class="descname">GET </code><code class="descname">/fitness/expert_tag/</code><a class="headerlink" href="#get--fitness-expert_tag-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取学员选用的健身目标,
+!!!数据不分页!!!</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/expert_tag/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;减脂&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;减脂圣经&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;is_public&quot;</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;增肌&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;肌肉维度&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;is_public&quot;</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; 名称</li>
+<li><strong>desc</strong> (<em>string</em>) &#8211; 描述</li>
+<li><strong>is_public</strong> (<em>boolean</em>) &#8211; 是否系统默认, False则为个人私有</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id23">
+<h2>创建教练擅长领域<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--fitness-expert_tag-">
+<code class="descname">POST </code><code class="descname">/fitness/expert_tag/</code><a class="headerlink" href="#post--fitness-expert_tag-" title="永久链接至目标">¶</a></dt>
+<dd><p>创建教练擅长领域, 可选用公用擅长领域, 也可以创建新的擅长领域;
+1. 选用公用擅长领域 创建个人擅长领域时, 只需要传公用领域id;
+2. 创建新教练擅长领域, 需要传完整的 领域数据</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; 目标名称</li>
+<li><strong>desc</strong> (<em>string</em>) &#8211; 描述</li>
+<li><strong>is_public</strong> (<em>boolean</em>) &#8211; 是否作为公开标签</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>POST /fitness/expert_tag/ HTTP/1.1
+Host: api.fitahol.com
+Accept: application/json, application/x-www-form-urlencoded
+1. 选用 公用健身目标
+{&quot;expert_tag&quot;: 123}
+
+2. 创建 新的健身目标
+{&quot;name&quot;:&quot;手臂增肌&quot;, &quot;desc&quot;: &quot;健身增肌肉&quot;, &quot;is_public&quot;: true}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">201 Created</a> &#8211; 创建成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;detail&quot;: &quot;创建成功&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id24">
+<h2>删除教练擅长领域<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h2>
+<dl class="delete">
+<dt id="delete--fitness-expert_tag--expert_tag_id--">
+<code class="descname">DELETE </code><code class="descname">/fitness/expert_tag/&lt;expert_tag_id&gt;/</code><a class="headerlink" href="#delete--fitness-expert_tag--expert_tag_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>创建擅长领域</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">DELETE</span> <span class="nn">/fitness/expert_tag/9/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">204 No Content</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:
+:statuscode 204: 删除成功, 无内容</p>
+<p><strong>请求出错情况</strong>
+:statuscode 404: 数据不存在</p>
+</dd></dl>
+
+</div>
+<div class="section" id="inbody">
+<h2>Inbody体测<a class="headerlink" href="#inbody" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--fitness-inbody-">
+<code class="descname">GET </code><code class="descname">/fitness/inbody/</code><a class="headerlink" href="#get--fitness-inbody-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取健身目标, 包括系统</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/fitness/inbody/?user=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="nt">&quot;next&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="nt">&quot;previous&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="nt">&quot;results&quot;</span><span class="p">:[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;cdate&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-01-30&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;metabolism&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;body_fat&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;fat_weight&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;skeletal_muscle&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;chest&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;arm&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;upper_arm&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;waistline&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;thigh&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;crus&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="mi">6</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cdate</strong> (<em>string</em>) &#8211; 日期</li>
+<li><strong>weight</strong> (<em>int</em>) &#8211; 体重</li>
+<li><strong>metabolism</strong> (<em>int</em>) &#8211; 基础代谢</li>
+<li><strong>body_fat</strong> (<em>int</em>) &#8211; 体脂率</li>
+<li><strong>fat_weight</strong> (<em>int</em>) &#8211; 脂肪重量</li>
+<li><strong>skeletal_muscle</strong> (<em>int</em>) &#8211; 骨骼肌</li>
+<li><strong>chest</strong> (<em>int</em>) &#8211; 胸围</li>
+<li><strong>arm</strong> (<em>int</em>) &#8211; 臂围</li>
+<li><strong>upper_arm</strong> (<em>int</em>) &#8211; 上臂围</li>
+<li><strong>waistline</strong> (<em>int</em>) &#8211; 腰围</li>
+<li><strong>thigh</strong> (<em>int</em>) &#8211; 大腿围</li>
+<li><strong>crus</strong> (<em>int</em>) &#8211; 小腿围</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id25">
+<h2>添加inbody记录<a class="headerlink" href="#id25" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--fitness-inbody-">
+<code class="descname">POST </code><code class="descname">/fitness/inbody/</code><a class="headerlink" href="#post--fitness-inbody-" title="永久链接至目标">¶</a></dt>
+<dd><p>添加健身记录</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+<li><strong>cdate</strong> (<em>string</em>) &#8211; 日期</li>
+<li><strong>weight</strong> (<em>int</em>) &#8211; 体重</li>
+<li><strong>metabolism</strong> (<em>int</em>) &#8211; 基础代谢</li>
+<li><strong>body_fat</strong> (<em>int</em>) &#8211; 体脂率</li>
+<li><strong>fat_weight</strong> (<em>int</em>) &#8211; 脂肪重量</li>
+<li><strong>skeletal_muscle</strong> (<em>int</em>) &#8211; 骨骼肌</li>
+<li><strong>chest</strong> (<em>int</em>) &#8211; 胸围</li>
+<li><strong>arm</strong> (<em>int</em>) &#8211; 臂围</li>
+<li><strong>upper_arm</strong> (<em>int</em>) &#8211; 上臂围</li>
+<li><strong>waistline</strong> (<em>int</em>) &#8211; 腰围</li>
+<li><strong>thigh</strong> (<em>int</em>) &#8211; 大腿围</li>
+<li><strong>crus</strong> (<em>int</em>) &#8211; 小腿围</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/fitness/inbody/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{
+    &quot;cdate&quot;: &quot;2016-01-30&quot;,
+    &quot;weight&quot;: 0,
+    &quot;metabolism&quot;: 0,
+    &quot;body_fat&quot;: 0,
+    &quot;fat_weight&quot;: 0,
+    &quot;skeletal_muscle&quot;: 0,
+    &quot;chest&quot;: 0,
+    &quot;arm&quot;: 0,
+    &quot;upper_arm&quot;: 0,
+    &quot;waistline&quot;: 0,
+    &quot;thigh&quot;: 0,
+    &quot;crus&quot;: 0,
+    &quot;user&quot;: 6
+}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">201 Created</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;id&quot;: 9,
+&quot;name&quot;: &quot;手臂增肌&quot;,
+&quot;measure&quot;: &quot;CM&quot;,
+&quot;goal&quot;: 50,
+&quot;is_default&quot;: false
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id26">
+<h2>删除inbody记录<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h2>
+<dl class="delete">
+<dt id="delete--fitness-inbody--inbody_id--">
+<code class="descname">DELETE </code><code class="descname">/fitness/inbody/&lt;inbody_id&gt;/</code><a class="headerlink" href="#delete--fitness-inbody--inbody_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>创建健身目标</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">DELETE</span> <span class="nn">/fitness/inbody/1/?user=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:
+:statuscode 204: 删除成功, 无内容</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">健身接口</a><ul>
+<li><a class="reference internal" href="#id2">健身动作类别</a></li>
+<li><a class="reference internal" href="#id3">添加健身动作类别</a></li>
+<li><a class="reference internal" href="#id4">删除健身动作类别</a></li>
+<li><a class="reference internal" href="#id5">肌肉群分类</a></li>
+<li><a class="reference internal" href="#id6">查看动作列表</a></li>
+<li><a class="reference internal" href="#id7">查看动作详情</a></li>
+<li><a class="reference internal" href="#id8">创建新动作</a></li>
+<li><a class="reference internal" href="#id9">查看健身设备</a></li>
+<li><a class="reference internal" href="#id10">添加健身设备</a></li>
+<li><a class="reference internal" href="#id11">获取学员健身目标及7日记录</a></li>
+<li><a class="reference internal" href="#id12">获取学员健身目标最近状态</a></li>
+<li><a class="reference internal" href="#id13">创建学员健身目标</a></li>
+<li><a class="reference internal" href="#id14">删除学员健身目标</a></li>
+<li><a class="reference internal" href="#id15">获取学员健身目标变化记录</a></li>
+<li><a class="reference internal" href="#id16">添加学员健身目标变化记录</a></li>
+<li><a class="reference internal" href="#id17">删除学员健身目标变化记录</a></li>
+<li><a class="reference internal" href="#id18">课堂训练动作列表</a></li>
+<li><a class="reference internal" href="#id19">添加课堂训练动作</a></li>
+<li><a class="reference internal" href="#id20">删除课堂训练动作</a></li>
+<li><a class="reference internal" href="#id21">公用教练擅长领域</a></li>
+<li><a class="reference internal" href="#id22">教练擅长领域</a></li>
+<li><a class="reference internal" href="#id23">创建教练擅长领域</a></li>
+<li><a class="reference internal" href="#id24">删除教练擅长领域</a></li>
+<li><a class="reference internal" href="#inbody">Inbody体测</a></li>
+<li><a class="reference internal" href="#id25">添加inbody记录</a></li>
+<li><a class="reference internal" href="#id26">删除inbody记录</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="gym.html" title="上一章">健身房信息</a></li>
+      <li>Next: <a href="notification.html" title="下一章">消息通知</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/fitness.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Devin Mah.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/fitness.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

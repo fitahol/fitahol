@@ -1,0 +1,845 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>日程&amp;课程 &mdash; fitahol 1.0.0 文档</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="fitahol 1.0.0 文档" href="index.html" />
+    <link rel="next" title="健身房信息" href="gym.html" />
+    <link rel="prev" title="用户接口" href="account.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>日程&amp;课程<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>已购买课程<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--schedule-course-purchased-">
+<code class="descname">GET </code><code class="descname">/schedule/course/purchased/</code><a class="headerlink" href="#get--schedule-course-purchased-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取已购课程数&amp;剩余课程</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/schedule/course/purchased/?user_id=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="nt">&quot;user_id&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+<span class="nt">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+<span class="nt">&quot;remain&quot;</span><span class="p">:</span> <span class="mi">13</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id3">
+<h2>添加/修改购买课程<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--schedule-course-">
+<code class="descname">POST </code><code class="descname">/schedule/course/</code><a class="headerlink" href="#post--schedule-course-" title="永久链接至目标">¶</a></dt>
+<dd><p>添加购买课程</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+<li><strong>remain</strong> (<em>int</em>) &#8211; 课程余量</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/schedule/course/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;添加成功&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id4">
+<h2>更新购买课程数<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<dl class="put">
+<dt id="put--schedule-course--course_id--">
+<code class="descname">PUT </code><code class="descname">/schedule/course/&lt;course_id&gt;/</code><a class="headerlink" href="#put--schedule-course--course_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>更新购买课程</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+<li><strong>amount</strong> (<em>int</em>) &#8211; 总量</li>
+<li><strong>remain</strong> (<em>int</em>) &#8211; 余量</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">PUT</span> <span class="nn">/schedule/course/1/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;更新成功&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id5">
+<h2>日历类型<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--schedule-calendar-">
+<code class="descname">GET </code><code class="descname">/schedule/calendar/</code><a class="headerlink" href="#get--schedule-calendar-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取日历类型, 目前只有一种 私教 default，可不获取。</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/schedule/calendar/?user_id=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;私教课程&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;slug&quot;</span><span class="p">:</span> <span class="s2">&quot;default&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;个人练习&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;slug&quot;</span><span class="p">:</span> <span class="s2">&quot;private&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id6">
+<h2>课程事件<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--schedule-event-">
+<code class="descname">GET </code><code class="descname">/schedule/event/</code><a class="headerlink" href="#get--schedule-event-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取健身目标, 包括系统</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p>date 过滤传参
+:param day: 具体日期,如 2016-01-31
+:type day: string</p>
+<p>date_range 过滤传参
+:param begin: 开始日期,如 2016-01-31
+:type begin: string
+:param end: 结束日期,如 2016-02-31
+:type end: string</p>
+<p>month 过滤传参
+:param year: 具体年份,如 2016
+:type year: int
+:param month: 具体月份,如 2, 12
+:type month: int</p>
+<p>year 过滤传参
+:param day: 具体年份,如 2016
+:type day: int</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/schedule/event/?user_id=6&amp;interval=date&amp;day=2016-01-31</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+[
+    {
+    &quot;id&quot;: 1,
+    &quot;calendar_slug&quot;: &quot;default&quot;,
+    &quot;user&quot;:{
+        &quot;id&quot;: 6,
+        &quot;nickname&quot;: &quot;学员介绍23&quot;,
+        &quot;portrait&quot;: &quot;学员头像&quot;
+        },
+    &quot;start&quot;: &quot;2016-01-31 07:00:00&quot;,
+    &quot;end&quot;: &quot;2016-01-31 08:00:00&quot;,
+    &quot;description&quot;: &quot;添加数据描述&quot;,
+    &quot;end_recurring_period&quot;: null, // 过滤时间, 与rule配合使用
+    &quot;color_event&quot;: &quot;#000000&quot;,
+    &quot;coach&quot;: 5,
+    &quot;rule&quot;: null
+    }
+]
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id7">
+<h2>最近课程事件<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--schedule-event-last-">
+<code class="descname">GET </code><code class="descname">/schedule/event/last/</code><a class="headerlink" href="#get--schedule-event-last-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取最近课程事件</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/schedule/event/last/?user_id=6&amp;interval=date&amp;day=2016-01-31</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+{
+&quot;id&quot;: 1,
+&quot;calendar_slug&quot;: &quot;default&quot;,
+&quot;user&quot;:{
+    &quot;id&quot;: 6,
+    &quot;nickname&quot;: &quot;学员介绍23&quot;,
+    &quot;portrait&quot;: &quot;学员头像&quot;
+    },
+&quot;start&quot;: &quot;2016-01-31 07:00:00&quot;,
+&quot;end&quot;: &quot;2016-01-31 08:00:00&quot;,
+&quot;description&quot;: &quot;添加数据描述&quot;,
+&quot;end_recurring_period&quot;: null, // 过滤时间, 与rule配合使用
+&quot;color_event&quot;: &quot;#000000&quot;,
+&quot;coach&quot;: 5,
+&quot;rule&quot;: null
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id8">
+<h2>过滤用户课程事件<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--schedule-event-?user_id=-user_id-">
+<code class="descname">GET </code><code class="descname">/schedule/event/?user_id=&lt;user_id&gt;</code><a class="headerlink" href="#get--schedule-event-?user_id=-user_id-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取某用户自己的课程事件</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/schedule/event/?user_id=9</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+[
+    {
+    &quot;id&quot;: 1,
+    &quot;calendar_slug&quot;: &quot;default&quot;,
+    &quot;user&quot;:{
+        &quot;id&quot;: 6,
+        &quot;nickname&quot;: &quot;学员介绍23&quot;,
+        &quot;portrait&quot;: &quot;学员头像&quot;
+        },
+    &quot;start&quot;: &quot;2016-01-31 07:00:00&quot;,
+    &quot;end&quot;: &quot;2016-01-31 08:00:00&quot;,
+    &quot;description&quot;: &quot;添加数据描述&quot;,
+    &quot;end_recurring_period&quot;: null, // 过滤时间, 与rule配合使用
+    &quot;color_event&quot;: &quot;#000000&quot;,
+    &quot;coach&quot;: 5,
+    &quot;rule&quot;: null
+    }
+]
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id9">
+<h2>添加课程事件<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--schedule-event-">
+<code class="descname">POST </code><code class="descname">/schedule/event/</code><a class="headerlink" href="#post--schedule-event-" title="永久链接至目标">¶</a></dt>
+<dd><p>添加课程事件：<strong>重复事件必须选择次数或终止时间其中一项，两项都选则叠加规则</strong></p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> (<em>string</em>) &#8211; 开始时间</li>
+<li><strong>end</strong> (<em>string</em>) &#8211; 结束时间</li>
+<li><strong>calendar_slug</strong> (<em>string</em>) &#8211; 选择日历，默认为default，可不传; 如果设置休息，值为 rest</li>
+<li><strong>coach</strong> (<em>int</em>) &#8211; 教练ID</li>
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 参与人员ID, 一般指学员; 设置休息值传为0或空即可</li>
+<li><strong>color_event</strong> (<em>string</em>) &#8211; 日程颜色, 16进程颜色, 如 #000000</li>
+<li><strong>description</strong> (<em>int</em>) &#8211; 事件备注或描述</li>
+<li><strong>rule_id</strong> (<em>int</em>) &#8211; 如果需要重复，需要选择规则ID；<strong>重复事件必须选择次数或终止时间其中一项，两项都选则叠加规则</strong></li>
+<li><strong>end_recurring_period</strong> (<em>string</em>) &#8211; 如果有重复，可选截止日期</li>
+<li><strong>times</strong> (<em>int</em>) &#8211; 如果有重复事件，可选重复次数</li>
+<li><strong>custom</strong> (<em>string</em>) &#8211; 如果是自定义每周重复，需要上传custom值，内容为选择的星期 &#8220;MO,TU,WE,TH,FR,SA,SU&#8221;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/account/goal_record/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{
+&quot;calendar&quot;:1,
+&quot;user&quot;: 6,
+&quot;start&quot;: &quot;2016-01-31 11:00:00&quot;,
+&quot;end&quot;: &quot;2016-01-31 13:00:00&quot;,
+&quot;description&quot;: &quot;数据描述&quot;,
+&quot;color_event&quot;: &quot;#000000&quot;,
+&quot;coach&quot;: 5
+}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+&quot;id&quot;: 2,
+&quot;start&quot;: &quot;2016-01-31 11:00:00&quot;,
+&quot;end&quot;: &quot;2016-01-31 13:00:00&quot;,
+&quot;description&quot;: &quot;数据描述&quot;,
+&quot;end_recurring_period&quot;: null,
+&quot;color_event&quot;: &quot;#000000&quot;,
+&quot;coach&quot;: 5,
+&quot;user&quot;: 6,
+&quot;rule&quot;: null,
+&quot;calendar&quot;: 1
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id10">
+<h2>删除课程事件<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<dl class="delete">
+<dt id="delete--schedule-event--event_id--">
+<code class="descname">DELETE </code><code class="descname">/schedule/event/&lt;event_id&gt;/</code><a class="headerlink" href="#delete--schedule-event--event_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>创建健身目标</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">DELETE</span> <span class="nn">/schedule/event/2/?user_id=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:
+:statuscode 204: 删除成功, 无内容</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id11">
+<h2>重复事件规则<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--schedule-rule-">
+<code class="descname">GET </code><code class="descname">/schedule/rule/</code><a class="headerlink" href="#get--schedule-rule-" title="永久链接至目标">¶</a></dt>
+<dd><p>查看事件重复规则</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/schedule/rule/?user_id=9</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>[
+    {
+    &quot;id&quot;: 1,
+    &quot;params&quot;:{
+        &quot;byweekday&quot;:[&quot;MO&quot;, &quot;TU&quot;, &quot;WE&quot;, &quot;TH&quot;, &quot;FR&quot;]
+        },
+    &quot;name&quot;: &quot;每个工作日&quot;,
+    &quot;description&quot;: &quot;每周一至周五&quot;,
+    &quot;frequency&quot;: &quot;WEEKLY&quot;,
+    &quot;is_public&quot;: true
+    },
+    {
+    &quot;id&quot;: 2,
+    &quot;params&quot;:{
+        &quot;byweekday&quot;: &quot;weekday&quot;
+    },
+    &quot;name&quot;: &quot;每周今日&quot;,
+    &quot;description&quot;: &quot;每周的星期【今日星期】&quot;,
+    &quot;frequency&quot;: &quot;WEEKLY&quot;,
+    &quot;is_public&quot;: true
+    },
+    {
+    &quot;id&quot;: 3,
+    &quot;params&quot;:{
+        &quot;byweekday&quot;:[&quot;MO&quot;, &quot;TU&quot;, &quot;WE&quot;, &quot;TH&quot;, &quot;FR&quot;, &quot;SA&quot;, &quot;SU&quot;]
+    },
+    &quot;name&quot;: &quot;每天&quot;,
+    &quot;description&quot;: &quot;每天，周一至周日&quot;,
+    &quot;frequency&quot;: &quot;WEEKLY&quot;,
+    &quot;is_public&quot;: true
+    },
+    {
+    &quot;id&quot;: 4,
+    &quot;params&quot;:{
+        &quot;bymonthday&quot;: &quot;date&quot;
+    },
+    &quot;name&quot;: &quot;每月今日&quot;,
+    &quot;description&quot;: &quot;每月的今天【几号】&quot;,
+    &quot;frequency&quot;: &quot;MONTHLY&quot;,
+    &quot;is_public&quot;: false
+    },
+    {
+    &quot;id&quot;: 5,
+    &quot;params&quot;:{
+        &quot;byweekday&quot;: &quot;custom&quot;
+    },
+    &quot;name&quot;: &quot;自定义每周&quot;,
+    &quot;description&quot;: &quot;选择每周【周一至周五日期】&quot;,
+    &quot;frequency&quot;: &quot;WEEKLY&quot;,
+    &quot;is_public&quot;: true
+    }
+]
+</pre></div>
+</div>
+<p><strong>特殊说明</strong>:</p>
+<blockquote>
+<div>如果选择 自定制每周，需要上传custom给 event接口。</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="id12">
+<h2>课程统计<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--schedule-event-analytics-">
+<code class="descname">GET </code><code class="descname">/schedule/event/analytics/</code><a class="headerlink" href="#get--schedule-event-analytics-" title="永久链接至目标">¶</a></dt>
+<dd><p>课程数据统计</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/schedule/event/analytics/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+    &quot;month_count&quot;: 0,
+    &quot;week_count&quot;: 0,
+    &quot;weekday_report&quot;:[
+        {
+        &quot;11-02&quot;: 0
+        },
+        {
+        &quot;11-01&quot;: 0
+        },
+        {
+        &quot;10-31&quot;: 0
+        },
+        {
+        &quot;10-30&quot;: 0
+        },
+        {
+        &quot;10-29&quot;: 0
+        },
+        {
+        &quot;10-28&quot;: 0
+        },
+        {
+        &quot;10-27&quot;: 0
+        }
+    ],
+    &quot;event_total&quot;: 8,
+    &quot;event_remain&quot;: 0
+}
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>month_count</strong> (<em>int</em>) &#8211; 本月完成课程数</li>
+<li><strong>week_count</strong> (<em>int</em>) &#8211; 本周完成课程数</li>
+<li><strong>event_total</strong> (<em>int</em>) &#8211; 课程总数</li>
+<li><strong>week_count</strong> &#8211; 剩余课程数</li>
+<li><strong>weekday_report</strong> (<em>list</em>) &#8211; 本周每天课程完成数据</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">日程&amp;课程</a><ul>
+<li><a class="reference internal" href="#id2">已购买课程</a></li>
+<li><a class="reference internal" href="#id3">添加/修改购买课程</a></li>
+<li><a class="reference internal" href="#id4">更新购买课程数</a></li>
+<li><a class="reference internal" href="#id5">日历类型</a></li>
+<li><a class="reference internal" href="#id6">课程事件</a></li>
+<li><a class="reference internal" href="#id7">最近课程事件</a></li>
+<li><a class="reference internal" href="#id8">过滤用户课程事件</a></li>
+<li><a class="reference internal" href="#id9">添加课程事件</a></li>
+<li><a class="reference internal" href="#id10">删除课程事件</a></li>
+<li><a class="reference internal" href="#id11">重复事件规则</a></li>
+<li><a class="reference internal" href="#id12">课程统计</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="account.html" title="上一章">用户接口</a></li>
+      <li>Next: <a href="gym.html" title="下一章">健身房信息</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/schedule.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Devin Mah.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/schedule.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

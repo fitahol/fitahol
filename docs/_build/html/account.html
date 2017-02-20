@@ -1,0 +1,1508 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>用户接口 &mdash; fitahol 1.0.0 文档</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="fitahol 1.0.0 文档" href="index.html" />
+    <link rel="next" title="日程&amp;课程" href="schedule.html" />
+    <link rel="prev" title="固件接口" href="firmware.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>用户接口<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>注册新用户<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--account-register-">
+<code class="descname">POST </code><code class="descname">/account/register/</code><a class="headerlink" href="#post--account-register-" title="永久链接至目标">¶</a></dt>
+<dd><p>注册新用户, account可以是手机号或邮箱,自动识别主册帐户</p>
+<p><strong>请求参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>account</strong> (<em>string</em>) &#8211; 注册帐户</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; 密码</li>
+<li><strong>rpt_password</strong> (<em>string</em>) &#8211; 确认密码</li>
+<li><strong>valid_code</strong> (<em>string</em>) &#8211; 4位数字验证码</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/account/register/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{
+    &quot;account&quot;: &quot;18600432852&quot;,
+    &quot;password&quot;: &quot;123212312&quot;,
+    &quot;rpt_password&quot;: &quot;123212312&quot;,
+    &quot;valid_code&quot;: &quot;1236&quot;
+}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 注册成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; 参数缺失或错误</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;注册成功&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>错误返回</strong>:</p>
+<ul class="simple">
+<li>密码不相同:</li>
+</ul>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">400</span> <span class="ne">Bad Request</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;密码不相同&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>验证码不符</li>
+</ul>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">400</span> <span class="ne">Bad Request</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;验证码不符,请重新输入&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id3">
+<h2>用户登录<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--account-login-">
+<code class="descname">POST </code><code class="descname">/account/login/</code><a class="headerlink" href="#post--account-login-" title="永久链接至目标">¶</a></dt>
+<dd><p>用户登录, account可以是手机号或邮箱,自动识别主册帐户</p>
+<p><strong>请求参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>account</strong> (<em>string</em>) &#8211; 用户帐户</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; 密码</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/account/login/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{
+    &quot;account&quot;: &quot;18600432852&quot;,
+    &quot;password&quot;: &quot;123212312&quot;,
+}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; 参数缺失或错误</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;gender&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+<span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;登录成功&quot;</span><span class="p">,</span>
+<span class="nt">&quot;age&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="nt">&quot;weight&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="nt">&quot;portrait&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="nt">&quot;date_joined&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-06-14 17:09:50&quot;</span><span class="p">,</span>
+<span class="nt">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="nt">&quot;nickname&quot;</span><span class="p">:</span> <span class="s2">&quot;18600432852&quot;</span><span class="p">,</span>
+<span class="nt">&quot;token&quot;</span><span class="p">:</span> <span class="s2">&quot;6fab6f6a67ba10ddda5fc976154a33752695d413&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>错误返回</strong>:</p>
+<ul class="simple">
+<li>用户名或密码错误:</li>
+</ul>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">400</span> <span class="ne">Bad Request</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;用户名或密码错误&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id4">
+<h2>微信小程序登录<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--wechat-wx-">
+<code class="descname">POST </code><code class="descname">/wechat/wx/</code><a class="headerlink" href="#post--wechat-wx-" title="永久链接至目标">¶</a></dt>
+<dd><p>小程序登录，进入获取 code和用户信息后调用</p>
+<p><strong>请求参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>account</strong> (<em>string</em>) &#8211; 用户帐户</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; 密码</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/account/login/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{
+    &quot;nickName&quot;:&quot;vividma&quot;,
+    &quot;gender&quot;:2,
+    &quot;language&quot;:&quot;zh_CN&quot;,
+    &quot;city&quot;:&quot;Chaoyang&quot;,
+    &quot;province&quot;:&quot;Beijing&quot;,
+    &quot;country&quot;:&quot;CN&quot;,
+    &quot;avatarUrl&quot;:&quot;http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIjTP6X5nGOexhIYTSUaZh3MeeN6bKQveclgQsqc8EFX4nQBFrsxgqCOyBlAIsx5XaNJKibt7zkKiag/0&quot;,
+    &quot;code&quot;:&quot;021tRNQQ07bJQa2mCLQQ0VMLQQ0tRNQ7&quot;,
+    &quot;u_type&quot;:1
+}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; 参数缺失或错误</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+教练端返回：
+
+{
+    &quot;token&quot;:&quot;443098a5da938a5408ecf891e6de27e453994636&quot;,
+    &quot;user_id&quot;:10052,
+    &quot;gym&quot;:null,
+    &quot;id&quot;:53,
+    &quot;u_type&quot;:1,
+    &quot;expert_tags&quot;:[],
+    &quot;user&quot;:
+        {
+            &quot;id&quot;:10052,
+            &quot;nickname&quot;:&quot;vividma&quot;,
+            &quot;portrait&quot;:&quot;http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIjTP6X5nGOexhIYTSUaZh3MeeN6bKQveclgQsqc8EFX4nQBFrsxgqCOyBlAIsx5XaNJKibt7zkKiag/0&quot;,
+            &quot;user_id&quot;:10052,
+            &quot;intro&quot;:&quot;undefined 北京&quot;
+        }
+}
+
+学员端返回：
+
+{
+    &quot;token&quot;:&quot;b9d3230ec331fc248054c267e3a58af4e3aca274&quot;,
+    &quot;u_type&quot;:0,
+    &quot;user_id&quot;:10053,
+    &quot;coach&quot;:
+        {
+            &quot;id&quot;:50,
+            &quot;gym&quot;:null,
+            &quot;expert_tags&quot;:[],
+            &quot;user&quot;:{&quot;id&quot;:10049,&quot;nickname&quot;:&quot;Fitahol&quot;,&quot;portrait&quot;:&quot;http://wx.qlogo.cn/mmopen/vi_32/4612iaEeX1TtEyzruUPDX5DDTetPCKeOIvibvpAbIXxsqu1O5n52a1gannVywj4T7gUUobaCLD3s7aia2nJZSFLZQ/0&quot;,&quot;user_id&quot;:10049,&quot;intro&quot;:&quot;&quot;}
+        }
+}
+</pre></div>
+</div>
+<p><strong>错误返回</strong>:</p>
+<ul class="simple">
+<li>服务异常时会出现</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="id5">
+<h2>重置密码<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--account-reset_pwd-">
+<code class="descname">POST </code><code class="descname">/account/reset_pwd/</code><a class="headerlink" href="#post--account-reset_pwd-" title="永久链接至目标">¶</a></dt>
+<dd><p>用户重置密码, account可以是手机号或邮箱, 需要先发送验证码</p>
+<p><strong>请求参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>account</strong> (<em>string</em>) &#8211; 用户帐户</li>
+<li><strong>password</strong> (<em>string</em>) &#8211; 密码</li>
+<li><strong>valid_code</strong> (<em>string</em>) &#8211; 验证码</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/account/reset_pwd/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{
+    &quot;account&quot;: &quot;18600432852&quot;,
+    &quot;password&quot;: &quot;123212312&quot;,
+    &quot;valid_code&quot;: &quot;1232&quot;,
+}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; 参数缺失或错误</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;重置成功&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>错误返回</strong>:</p>
+<ul class="simple">
+<li>验证码错误:</li>
+</ul>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">400</span> <span class="ne">Bad Request</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;验证码错误&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>用户帐户不存在</li>
+</ul>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">404</span> <span class="ne">NOT FOUND</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;用户帐户不存在&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id6">
+<h2>个人中心<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--account-(user_id)-">
+<code class="descname">POST </code><code class="descname">/account/</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><code class="descname">/</code><a class="headerlink" href="#post--account-(user_id)-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取用户个人相关信息, 集成个人信息 帐户信息等</p>
+<p><strong>请求参数</strong>:</p>
+<p>无, 需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/account/3/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+**教练返回**
+{
+&quot;unread_count&quot;: 4,
+&quot;user&quot;:{
+    &quot;date_joined&quot;: &quot;2016-05-04 10:35:29&quot;,
+    &quot;id&quot;: 8,
+    &quot;nickname&quot;: &quot;18600153507&quot;,
+    &quot;portrait&quot;: &quot;&quot;,
+    &quot;gender&quot;: &quot;0&quot;,
+    &quot;age&quot;: &quot;0&quot;,
+    &quot;height&quot;: &quot;0&quot;,
+    &quot;weight&quot;: &quot;0&quot;
+},
+&quot;coach&quot;:{
+    &quot;gym&quot;:{&quot;id&quot;: 1, &quot;name&quot;: &quot;麦加健身&quot;, &quot;score&quot;: 10, &quot;address&quot;: &quot;&quot;, &quot;telephone&quot;: &quot;&quot;,…},
+    &quot;expert_tags&quot;:[
+    {
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;减脂&quot;,
+    &quot;desc&quot;: &quot;减脂圣经&quot;
+    },
+    {
+    &quot;id&quot;: 2,
+    &quot;name&quot;: &quot;增肌&quot;,
+    &quot;desc&quot;: &quot;肌肉维度&quot;
+    }
+    ],
+    &quot;intro&quot;: &quot;教练李辉&quot;,
+    &quot;experience&quot;: 3  //资历年限
+}
+}
+
+**学员返回**
+{
+&quot;unread_count&quot;: 4,
+&quot;user&quot;:{
+    &quot;date_joined&quot;: &quot;2016-06-14 17:09:50&quot;,
+    &quot;id&quot;: 9,
+    &quot;nickname&quot;: &quot;18600432852&quot;,
+    &quot;portrait&quot;: &quot;&quot;,
+    &quot;gender&quot;: &quot;0&quot;,
+    &quot;age&quot;: &quot;0&quot;,
+    &quot;height&quot;: &quot;0&quot;,
+    &quot;weight&quot;: &quot;0&quot;
+},
+&quot;member&quot;:{
+    &quot;fit_goal&quot;:[
+        {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;减脂增肌&quot;,
+        &quot;measure&quot;: &quot;Kg&quot;,
+        &quot;goal&quot;: 0,
+        &quot;is_public&quot;: false
+        }
+    ],
+    &quot;gym&quot;:{
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;麦加健身&quot;,
+        &quot;score&quot;: 10,
+        &quot;address&quot;: &quot;&quot;,
+        &quot;telephone&quot;: &quot;&quot;,
+        &quot;lat&quot;: 0,
+        &quot;lng&quot;: 0,
+        &quot;city&quot;: null
+    },
+    &quot;intro&quot;: &quot;马德岭&quot;
+}
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id7">
+<h2>查找用户<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--account-profile-?query=189324214324">
+<code class="descname">GET </code><code class="descname">/account/profile/?query=189324214324</code><a class="headerlink" href="#get--account-profile-?query=189324214324" title="永久链接至目标">¶</a></dt>
+<dd><p>查找用户，返回用户个人信息</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>query</strong> (<em>string</em>) &#8211; 查询参数，支持手机号/UID/用户名</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+[
+    {
+    &quot;date_joined&quot;: &quot;2016-06-14 17:09:50&quot;,
+    &quot;id&quot;: 9,  // 用户ID
+    &quot;nickname&quot;: &quot;18600432852&quot;,
+    &quot;portrait&quot;: &quot;&quot;,
+    &quot;gender&quot;: &quot;0&quot;,  // 0未知,1男性,2女性
+    &quot;age&quot;: &quot;0&quot;,
+    &quot;height&quot;: &quot;0&quot;,
+    &quot;weight&quot;: &quot;0&quot;
+    }
+]
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id8">
+<h2>获取用户基本信息<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--account-profile-(user_id)-">
+<code class="descname">GET </code><code class="descname">/account/profile/</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><code class="descname">/</code><a class="headerlink" href="#get--account-profile-(user_id)-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取用户基本用户信息</p>
+<p><strong>请求参数</strong>:</p>
+<p>无, 需要 Token 认证通过</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/account/profile/3/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+{
+&quot;date_joined&quot;: &quot;2016-06-14 17:09:50&quot;,
+&quot;id&quot;: 9,  // 用户ID
+&quot;nickname&quot;: &quot;18600432852&quot;,
+&quot;portrait&quot;: &quot;&quot;,
+&quot;gender&quot;: &quot;0&quot;,  // 0未知,1男性,2女性
+&quot;age&quot;: &quot;0&quot;,
+&quot;height&quot;: &quot;0&quot;,
+&quot;weight&quot;: &quot;0&quot;,
+&quot;intro&quot;: &quot;个性签名&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id9">
+<h2>更新用户信息<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<dl class="patch">
+<dt id="patch--account-profile-(user_id)-">
+<code class="descname">PATCH </code><code class="descname">/account/profile/</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><code class="descname">/</code><a class="headerlink" href="#patch--account-profile-(user_id)-" title="永久链接至目标">¶</a></dt>
+<dd><p>更新用户基本信息, put 为全量更新, 支持使用 patch 传单项数据进行更新</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>nickname</strong> (<em>string</em>) &#8211; 用户昵称</li>
+<li><strong>intro</strong> (<em>string</em>) &#8211; 个性签名／简介</li>
+<li><strong>weight</strong> (<em>int</em>) &#8211; 体重,单位kg</li>
+<li><strong>height</strong> (<em>int</em>) &#8211; 身高, 单位cm</li>
+<li><strong>age</strong> (<em>int</em>) &#8211; 年龄</li>
+<li><strong>gender</strong> (<em>int</em>) &#8211; 性别, 0未知,1男性,2女性</li>
+<li><strong>gym_id</strong> (<em>int</em>) &#8211; 健身房ID，如果不存在需要引导用户创建</li>
+<li><strong>expert_tags</strong> (<em>string</em>) &#8211; 擅长领域IDs，多个数据以,间隔：&#8221;1,23,12,34&#8221;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">PATCH</span> <span class="nn">/account/profile/3/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{
+    &quot;nickname&quot;: &quot;马德岭&quot;,
+    &quot;weight&quot;: 80,
+    &quot;height&quot;: 178,
+    &quot;age&quot;: 27,
+    &quot;gender&quot;: 0,
+    &quot;intro: &quot;更新签名&quot;
+}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;更新成功&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id10">
+<h2>头像上传<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--account-portrait-">
+<code class="descname">POST </code><code class="descname">/account/portrait/</code><a class="headerlink" href="#post--account-portrait-" title="永久链接至目标">¶</a></dt>
+<dd><p>用户头像文件上传</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p>portrait 头像文件名称, 需要前端压缩文件，网页端按 base64上传</p>
+<p>type 文件类型</p>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;上传成功&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id11">
+<h2>学员列表<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--account-member-">
+<code class="descname">GET </code><code class="descname">/account/member/</code><a class="headerlink" href="#get--account-member-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取学员列表</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;user_id&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="nt">&quot;nickname&quot;</span><span class="p">:</span> <span class="s2">&quot;18600432852&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;gender&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;portrait&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id">
+<h2>学员ID/名称列表<a class="headerlink" href="#id" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--account-member-card-">
+<code class="descname">GET </code><code class="descname">/account/member/card/</code><a class="headerlink" href="#get--account-member-card-" title="永久链接至目标">¶</a></dt>
+<dd><p>学员ID/名称列表, 用在课程选择显示所有学员名称处。 同时返回头像地址</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>query</strong> (<em>string</em>) &#8211; 查询参数，支持手机号/UID/用户名</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;user_id&quot;</span><span class="p">:</span> <span class="mi">10008</span><span class="p">,</span>
+    <span class="nt">&quot;nickname&quot;</span><span class="p">:</span> <span class="s2">&quot;小助手&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;portrait&quot;</span><span class="p">:</span> <span class="s2">&quot;头像地址&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id12">
+<h2>查询教练学员<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--account-member-?query=189324214324">
+<code class="descname">GET </code><code class="descname">/account/member/?query=189324214324</code><a class="headerlink" href="#get--account-member-?query=189324214324" title="永久链接至目标">¶</a></dt>
+<dd><p>查询学员，仅包括查询教练自己的学员； 建议本查询使用本地缓存，避免使用接口</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>query</strong> (<em>string</em>) &#8211; 查询参数，支持手机号/UID/用户名</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;user_id&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="nt">&quot;nickname&quot;</span><span class="p">:</span> <span class="s2">&quot;18600432852&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;gender&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;portrait&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id13">
+<h2>学员详情<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--account-member-(user_id)-">
+<code class="descname">GET </code><code class="descname">/account/member/</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><code class="descname">/</code><a class="headerlink" href="#get--account-member-(user_id)-" title="永久链接至目标">¶</a></dt>
+<dd><p>更新用户基本信息</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+{
+    &quot;fit_goal&quot;:[
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;减脂增肌&quot;,
+            &quot;measure&quot;: &quot;Kg&quot;,
+            &quot;goal&quot;: 0,
+            &quot;is_public&quot;: false
+        }
+    ],
+    &quot;user&quot;:{
+        date_joined&quot;: &quot;2016-06-14 17:09:50&quot;,
+        &quot;id&quot;: 9,
+        &quot;nickname&quot;: &quot;18600432852&quot;,
+        &quot;portrait&quot;: &quot;&quot;,
+        &quot;gender&quot;: &quot;0&quot;,
+        &quot;age&quot;: &quot;0&quot;,
+        &quot;height&quot;: &quot;0&quot;,
+        &quot;weight&quot;: &quot;0&quot;
+    },
+    &quot;gym&quot;:{
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;麦加健身&quot;,
+        &quot;score&quot;: 10,
+        &quot;address&quot;: &quot;&quot;,
+        &quot;telephone&quot;: &quot;&quot;,
+        &quot;lat&quot;: 0,
+        &quot;lng&quot;: 0,
+        &quot;city&quot;: null
+    },
+    &quot;intro&quot;: &quot;马德岭&quot;
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id14">
+<h2>个人私教列表<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--account-coach-personal-">
+<code class="descname">GET </code><code class="descname">/account/coach/personal/</code><a class="headerlink" href="#get--account-coach-personal-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取学员私人教练</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+[
+    {
+        &quot;gym&quot;: null,
+        &quot;expert_tags&quot;:[
+            {&quot;id&quot;: 3, &quot;name&quot;: &quot;增肌塑体&quot;, &quot;desc&quot;: &quot;增肌塑体&quot;, &quot;is_public&quot;: true…},
+            {&quot;id&quot;: 4, &quot;name&quot;: &quot;减脂塑型&quot;, &quot;desc&quot;: &quot;减脂塑型&quot;, &quot;is_public&quot;: true…}
+            ],
+        &quot;user&quot;:{
+            &quot;id&quot;: 10008,
+            &quot;nickname&quot;: &quot;小助手&quot;,
+            &quot;portrait&quot;: &quot;http://www.fitahol.com/media/account/portrait/fitahol-icon.jpg&quot;
+            }
+    },
+    {
+        &quot;gym&quot;: null,
+        &quot;expert_tags&quot;:[
+            {&quot;id&quot;: 3, &quot;name&quot;: &quot;增肌塑体&quot;, &quot;desc&quot;: &quot;增肌塑体&quot;, &quot;is_public&quot;: true…},
+            {&quot;id&quot;: 4, &quot;name&quot;: &quot;减脂塑型&quot;, &quot;desc&quot;: &quot;减脂塑型&quot;, &quot;is_public&quot;: true…}
+            ],
+        &quot;user&quot;:{
+            &quot;id&quot;: 10037,
+            &quot;nickname&quot;: &quot;随便写&quot;,
+            &quot;portrait&quot;: &quot;http://www.fitahol.com/media/icon/fitness-boy.png&quot;
+        }
+    }
+]
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>gym</strong> (<em>string</em>) &#8211; 所在健身房</li>
+<li><strong>expert_tags</strong> (<em>list</em>) &#8211; 擅长领域</li>
+<li><strong>user</strong> (<em>json</em>) &#8211; 个人信息</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id15">
+<h2>学员/教练请求列表<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--account-relation-">
+<code class="descname">GET </code><code class="descname">/account/relation/</code><a class="headerlink" href="#get--account-relation-" title="永久链接至目标">¶</a></dt>
+<dd><p>学员/教练请求列表, 数据分页; 同微信新的朋友界面</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/account/relation/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+{
+&quot;count&quot;: 8,
+&quot;next&quot;: null,
+&quot;previous&quot;: null,
+&quot;results&quot;:[
+    {
+    &quot;id&quot;: 1,
+    &quot;sender&quot;:{&quot;id&quot;: 8, &quot;nickname&quot;: &quot;18600153507&quot;, &quot;portrait&quot;: &quot;&quot;},
+    &quot;recipient&quot;:{&quot;id&quot;: 3, &quot;nickname&quot;: &quot;lingnck@163&quot;, &quot;portrait&quot;: &quot;&quot;},
+    &quot;ref_type&quot;: &quot;add_member&quot;,
+    &quot;status&quot;: 0,
+    &quot;ctime&quot;: &quot;2016-06-16 15:43:20&quot;
+    },
+    {&quot;id&quot;: 2, &quot;sender&quot;:{&quot;id&quot;: 8, &quot;nickname&quot;: &quot;18600153507&quot;, &quot;portrait&quot;: &quot;&quot;…},
+]
+}
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ref_type</strong> (<em>string</em>) &#8211; 添加类型 (&#8220;add_member&#8221;, &#8220;添加学员&#8221;), (&#8220;add_coach&#8221;, &#8220;添加教练&#8221;), (&#8220;add_friend&#8221;, &#8220;添加好友&#8221;),(&#8220;add_follow&#8221;, &#8220;添加关注&#8221;)</li>
+<li><strong>status</strong> (<em>int</em>) &#8211; 接受状态 (1, &#8220;接受&#8221;), (-1, &#8220;拒绝&#8221;), (0, &#8220;等待回应&#8221;),</li>
+<li><strong>ctime</strong> (<em>string</em>) &#8211; 请求时间</li>
+<li><strong>sender</strong> (<em>json</em>) &#8211; 发送人信息</li>
+<li><strong>sender</strong> &#8211; 接收方信息</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id16">
+<h2>请求添加学员/教练<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--account-relation-">
+<code class="descname">POST </code><code class="descname">/account/relation/</code><a class="headerlink" href="#post--account-relation-" title="永久链接至目标">¶</a></dt>
+<dd><p>添加新学员</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p>user_id 对应的添加 用户id； 系统自动识别用户身份添加关系</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/account/relation/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{
+    &quot;user_id&quot;: 9
+}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;添加成功,请等待对方验证&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id17">
+<h2>确认添加学员/教练<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--account-relation--relation_id--">
+<code class="descname">POST </code><code class="descname">/account/relation/&lt;relation_id&gt;/</code><a class="headerlink" href="#post--account-relation--relation_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>确认添加新学员或教练; 添加请求会以通知方式发给对方, 在通知中点击查看是否确认添加</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p>status 接受状态, 拒绝为-1, 接受为1</p>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+拒绝对方:
+
+    {
+    &quot;detail&quot;: &quot;已拒绝对方请求&quot;,
+    }
+
+确认添加:
+
+    {
+    &quot;detail&quot;: &quot;确认成功&quot;,
+    }
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="id18">
+<h2>删除教练与学员关联<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--account-del-relation-">
+<code class="descname">POST </code><code class="descname">/account/del/relation/</code><a class="headerlink" href="#post--account-del-relation-" title="永久链接至目标">¶</a></dt>
+<dd><p>删除学员与教练关联</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<p>需要上传对应的 删除人员【学员／教练】 user_id</p>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/account/del/relation/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+
+{&quot;user_id&quot;: 10008}
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<p>{&#8220;detail&#8221;: &#8220;删除成功&#8221;}</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id19">
+<h2>最近几张照片形象<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--account-figure-latest-">
+<code class="descname">GET </code><code class="descname">/account/figure/latest/</code><a class="headerlink" href="#get--account-figure-latest-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取照片</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/account/figure/?user_id=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;figure&quot;</span><span class="p">:</span> <span class="s2">&quot;http://0.0.0.0:9999/media/account/figure/s25505835.jpg&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;i try&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;ctime&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-01-30 15:09:07&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;user_id&quot;</span><span class="p">:</span> <span class="mi">6</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>figure</strong> (<em>string</em>) &#8211; 照片地址</li>
+<li><strong>desc</strong> (<em>string</em>) &#8211; 描述</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id20">
+<h2>照片形象<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h2>
+<dl class="get">
+<dt id="get--account-figure-">
+<code class="descname">GET </code><code class="descname">/account/figure/</code><a class="headerlink" href="#get--account-figure-" title="永久链接至目标">¶</a></dt>
+<dd><p>获取照片</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/account/figure/?user_id=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+<span class="nt">&quot;count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="nt">&quot;next&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="nt">&quot;previous&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="nt">&quot;results&quot;</span><span class="p">:[</span>
+    <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;figure&quot;</span><span class="p">:</span> <span class="s2">&quot;http://0.0.0.0:9999/media/account/figure/s25505835.jpg&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;i try&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;ctime&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-01-30 15:09:07&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;user_id&quot;</span><span class="p">:</span> <span class="mi">6</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>返回参数</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>figure</strong> (<em>string</em>) &#8211; 照片地址</li>
+<li><strong>desc</strong> (<em>string</em>) &#8211; 描述</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id21">
+<h2>添加照片形象<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h2>
+<dl class="post">
+<dt id="post--account-figure-">
+<code class="descname">POST </code><code class="descname">/account/figure/</code><a class="headerlink" href="#post--account-figure-" title="永久链接至目标">¶</a></dt>
+<dd><p>添加照片形象</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过； figure和 figure_file 可选，一种是base64压缩数据，一种文件本身</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+<li><strong>figure</strong> (<em>string</em>) &#8211; 形象照片, 文件上传需要压缩传为base64数据</li>
+<li><strong>figure_file</strong> (<em>file</em>) &#8211; 形象照片, 可直接上传文件，需要 multipart/form-data支持</li>
+<li><strong>cdate</strong> (<em>string</em>) &#8211; 日期选择</li>
+<li><strong>desc</strong> (<em>string</em>) &#8211; 描述</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/account/figure/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">multipart/form-data</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>{
+&#8220;id&#8221;: 2,
+&#8220;figure&#8221;: &#8220;<a class="reference external" href="http://0.0.0.0:9999/media/account/figure/s25505835_uoR8YlH.jpg">http://0.0.0.0:9999/media/account/figure/s25505835_uoR8YlH.jpg</a>&#8221;,
+&#8220;desc&#8221;: &#8220;描述&#8221;,
+&#8220;utime&#8221;: &#8220;2016-01-30 15:19:33&#8221;,
+&#8220;user_id&#8221;: 6
+}</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id22">
+<h2>删除照片形象<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h2>
+<dl class="delete">
+<dt id="delete--account-figure--figure_id--">
+<code class="descname">DELETE </code><code class="descname">/account/figure/&lt;figure_id&gt;/</code><a class="headerlink" href="#delete--account-figure--figure_id--" title="永久链接至目标">¶</a></dt>
+<dd><p>创建照片形象</p>
+<p><strong>请求参数</strong>:</p>
+<p>需要 Token 认证通过</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_id</strong> (<em>int</em>) &#8211; 学员用户id</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求示例</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">DELETE</span> <span class="nn">/account/figure/1/?user_id=6</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.fitahol.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json, application/x-www-form-urlencoded</span>
+</pre></div>
+</div>
+<p><strong>返回状态码</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; 请求成功</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a> &#8211; 用户未登陆</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a> &#8211; 用户权限不足</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>请求成功返回</strong>:
+:statuscode 204: 删除成功, 无内容</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">用户接口</a><ul>
+<li><a class="reference internal" href="#id2">注册新用户</a></li>
+<li><a class="reference internal" href="#id3">用户登录</a></li>
+<li><a class="reference internal" href="#id4">微信小程序登录</a></li>
+<li><a class="reference internal" href="#id5">重置密码</a></li>
+<li><a class="reference internal" href="#id6">个人中心</a></li>
+<li><a class="reference internal" href="#id7">查找用户</a></li>
+<li><a class="reference internal" href="#id8">获取用户基本信息</a></li>
+<li><a class="reference internal" href="#id9">更新用户信息</a></li>
+<li><a class="reference internal" href="#id10">头像上传</a></li>
+<li><a class="reference internal" href="#id11">学员列表</a></li>
+<li><a class="reference internal" href="#id">学员ID/名称列表</a></li>
+<li><a class="reference internal" href="#id12">查询教练学员</a></li>
+<li><a class="reference internal" href="#id13">学员详情</a></li>
+<li><a class="reference internal" href="#id14">个人私教列表</a></li>
+<li><a class="reference internal" href="#id15">学员/教练请求列表</a></li>
+<li><a class="reference internal" href="#id16">请求添加学员/教练</a></li>
+<li><a class="reference internal" href="#id17">确认添加学员/教练</a></li>
+<li><a class="reference internal" href="#id18">删除教练与学员关联</a></li>
+<li><a class="reference internal" href="#id19">最近几张照片形象</a></li>
+<li><a class="reference internal" href="#id20">照片形象</a></li>
+<li><a class="reference internal" href="#id21">添加照片形象</a></li>
+<li><a class="reference internal" href="#id22">删除照片形象</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="firmware.html" title="上一章">固件接口</a></li>
+      <li>Next: <a href="schedule.html" title="下一章">日程&amp;课程</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/account.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Devin Mah.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/account.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

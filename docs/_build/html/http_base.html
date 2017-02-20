@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>&lt;no title&gt; &mdash; fitahol 1.0.0 文档</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="fitahol 1.0.0 文档" href="index.html" />
+    <link rel="next" title="用户系统" href="intro.html" />
+    <link rel="prev" title="RESTFUL接口协定" href="base.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p># 接口协定</p>
+<p>## 接口地址 BASE_URL
+服务器地址： <a class="reference external" href="http://api.91atm.com">http://api.91atm.com</a>
+测试地址: <a class="reference external" href="http://91atm.aa123bb.com">http://91atm.aa123bb.com</a></p>
+<p>## 接口HTTP协议(HTTP STATUS)
+所有接口均按restful协议：</p>
+<ol class="arabic simple">
+<li>请求成功 Successful - 2xx</li>
+</ol>
+<p>最常用的三个：</p>
+<blockquote>
+<div><ul class="simple">
+<li>HTTP_200_OK  get和put/patch请求成功</li>
+<li>HTTP_201_CREATED  post 创建成功</li>
+<li>HTTP_202_ACCEPTED delete 删除接受</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>客户端请求有误 Client Error - 4xx</li>
+</ol>
+<p>最常遇到的：</p>
+<blockquote>
+<div>HTTP_400_BAD_REQUEST 前端参数格式或类型有误
+HTTP_401_UNAUTHORIZED 用户未登录，需要先登录
+HTTP_403_FORBIDDEN  用户身份权限不足
+HTTP_404_NOT_FOUND  请求或访问的数据不存在
+HTTP_405_METHOD_NOT_ALLOWED  http请求方法不被允许
+HTTP_406_NOT_ACCEPTABLE  数据内容有问题，不接受处理</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>服务器异常 Server Error - 5xx</li>
+</ol>
+<p>常见的包括：</p>
+<blockquote>
+<div>HTTP_500_INTERNAL_SERVER_ERROR 服务器代码程序有bug，崩溃
+HTTP_502_BAD_GATEWAY  nginx网关出错误
+HTTP_503_SERVICE_UNAVAILABLE  nginx网关连接不到应用服务器
+HTTP_504_GATEWAY_TIMEOUT  达到nginx设置的超时限制</div></blockquote>
+<p>## 返回数据格式说明(Data Format)</p>
+<p><strong>详情数据</strong> 是json 数据项：</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>{</dt>
+<dd>&#8220;total&#8221;: 10,
+&#8220;balance&#8221;: 0,
+&#8220;ad_count&#8221;: 4,
+&#8220;ad_money&#8221;: 0,
+&#8220;invite_money&#8221;: 0</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>哈希对象包括了相关的属性值。</p>
+<p><strong>列表数据**默认服务端都会**分页</strong>，如果不需要分页会在接口中特别说明！</p>
+<p>默认每页数据10项，数据格式如下所示：</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>{</dt>
+<dd><p class="first">&#8220;count&#8221;: 1,
+&#8220;next&#8221;: null,
+&#8220;previous&#8221;: null,
+&#8220;results&#8221;: [</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>{</dt>
+<dd>&#8220;id&#8221;: 1,
+&#8220;withdraw_good&#8221;: 1,
+&#8220;pay&#8221;: 3000,
+&#8220;pay_status&#8221;: 1,
+&#8220;ptype&#8221;: 1,
+&#8220;remark&#8221;: &#8220;&#8221;</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p class="last">]</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>next和previous值如:
+&gt; <a class="reference external" href="http://api.example.org/accounts/?page=5">http://api.example.org/accounts/?page=5</a></p>
+<p>服务端支持客户端指定 每页数据大小，参数值为 page_size，上限为100。（超过100，全部按上限处理）</p>
+<p>说明：如果接口未分页，返回数据为列表数据 [{&#8220;key&#8221;: &#8220;value&#8221;}, {&#8220;key&#8221;: &#8220;value&#8221;}]，返回所有数据列表。</p>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="base.html" title="上一章">RESTFUL接口协定</a></li>
+      <li>Next: <a href="intro.html" title="下一章">用户系统</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/http_base.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Devin Mah.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/http_base.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

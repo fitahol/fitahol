@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>基础协定 &mdash; fitahol 1.0.0 文档</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="fitahol 1.0.0 文档" href="index.html" />
+    <link rel="next" title="接口协定" href="api_base.html" />
+    <link rel="prev" title="欢迎进入 fitahol 文档!" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>基础协定<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="http">
+<h2>支持的http方法<a class="headerlink" href="#http" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li>GET 获取数据</li>
+<li>POST 创建数据</li>
+<li>PUT 全量更新数据，需要传数据全部属性，如重填用户表更新全部信息。</li>
+<li>PATCH 定量更新，仅需要传指定数据项，如仅更新用户头像。</li>
+<li>DELETE 删除数据，指定id删除数据。</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>可接收数据格式<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li>json</li>
+<li>html表单</li>
+<li>multipart/form-data</li>
+<li>文件</li>
+<li>可扩展支持 XML, YAML。如有需要，请指出。</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>返回数据<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li>json</li>
+<li>可扩展支持 xml, yaml, jsonp。如有需要，请指出。</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2><strong>HTTP更新操作说明</strong><a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>除用户信息等特殊接口, 所有接口都支持CRUD操作, 其中更新支持 PUT 和 PATCH 两种操作。</p>
+<p>PUT 操作和 POST传参一样, 故不会重复说明;</p>
+<p>PATCH 操作 只需要传其中部分参数操作, 也不再额外说明;</p>
+<p>如遇到接口不一致, 会在文档中额外给出说明.</p>
+<img alt="_images/url_desc.png" src="_images/url_desc.png" />
+<p>所有接口的url路径格式如上图所示:</p>
+<p>其中 prefix 为资源名称, 如profile, 对它进行 GET 获取列表数据, post 创建新数据;</p>
+<p>methodname 指特定的列表过滤方法, 一般只有内部指定才会有;</p>
+<p>lookup 指查询到具体单一资源的查询方式, 一般是数据库的 id. 对单一次源, get获取详情, put 全量更新, patch 定量更新, delete 删除数据项;</p>
+</div>
+<div class="section" id="id5">
+<h2>特别说明<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>关于跨域请求，服务器支持指定IP和域名跨域，如果有调试测试需求，请联系我配置IP或域名。</p>
+<p>默认情况下，不建议使用jsonp封装建数据。</p>
+</div>
+<div class="section" id="id6">
+<h2>用户认证协议<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>系统目前仅支持微信登录，建立虚似用户与微信openid绑定。</p>
+<p>登录支持 <strong>TokenAuthentication</strong> 和 <strong>SessionAuthentication</strong> 两种机制。</p>
+<p>客户端和Web前端目前与服务端分离，主要使用 TokenAuthentication 验证用户身份。</p>
+<p>访问方式，在http header中指定 Authorization 值，格式如下所示：</p>
+<p>&gt; curl -X GET <a class="reference external" href="http://127.0.0.1:8000/api/example/">http://127.0.0.1:8000/api/example/</a> -H &#8216;Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b&#8217;</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">基础协定</a><ul>
+<li><a class="reference internal" href="#http">支持的http方法</a></li>
+<li><a class="reference internal" href="#id2">可接收数据格式</a></li>
+<li><a class="reference internal" href="#id3">返回数据</a></li>
+<li><a class="reference internal" href="#id4"><strong>HTTP更新操作说明</strong></a></li>
+<li><a class="reference internal" href="#id5">特别说明</a></li>
+<li><a class="reference internal" href="#id6">用户认证协议</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="上一章">欢迎进入 fitahol 文档!</a></li>
+      <li>Next: <a href="api_base.html" title="下一章">接口协定</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/restful.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Devin Mah.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/restful.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

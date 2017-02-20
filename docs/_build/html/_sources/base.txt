@@ -1,0 +1,50 @@
+RESTFUL接口协定
+-----------
+
+**接口使用RESTFUL协议，支持http方法仅包括:**
+
+> GET 获取数据
+> 
+> POST 创建数据
+> 
+> PUT 全量更新数据，需要传数据全部属性，如重填用户表更新全部信息。
+> 
+> PATCH 定量更新，仅需要传指定数据项，如仅更新用户头像。
+> 
+> DELETE 删除数据，指定id删除数据。
+
+**可接收数据格式包括：**
+
+> json
+> 
+> html表单 
+> 
+> multipart/form-data
+> 
+> 文件
+> 
+> 可扩展支持 XML, YAML。如有需要，请指出。
+
+
+**返回数据目前只支持**
+
+> json
+> 
+> 可扩展支持 xml, yaml, jsonp。如有需要，请指出。
+
+**特别说明:** 关于跨域请求，服务器支持指定IP和域名跨域，如果有调试测试需求，请联系我配置IP或域名。
+
+默认情况下，不建议使用jsonp装建数据。
+
+
+# 用户认证Authentication协议
+系统目前仅支持微信登录，建立虚似用户与微信openid绑定。
+
+登录支持 **TokenAuthentication** 和 **SessionAuthentication** 两种机制。
+
+客户端和Web前端目前与服务端分离，主要使用 TokenAuthentication 验证用户身份。
+
+访问方式，在http header中指定 Authorization 值，格式如下所示：
+
+> curl -X GET http://127.0.0.1:8000/api/example/ -H 'Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b'
+
