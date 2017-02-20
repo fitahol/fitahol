@@ -1,4 +1,7 @@
 # Fitahol Server
+在线文档地址: [http://www.fitahol.com/docs/index.html](http://www.fitahol.com/docs/index.html)
+
+使用 sphinx-docs 生成。
 
 ## 部署准备:
 
